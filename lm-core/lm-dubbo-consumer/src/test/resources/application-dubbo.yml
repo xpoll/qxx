@@ -1,0 +1,15 @@
+dubbo:
+  id: id
+  name: lm-provider
+  registry: zookeeper://127.0.0.1:2181
+  port: -1
+  timeout: 10000
+  threads: 100
+  heartBeats: 10000
+  mode: consumer
+zookeeper:
+  host: 127.0.0.1
+  port: 2181
+logging:
+  file: C:/TEMP/log/web.log
+  level.*: INFO

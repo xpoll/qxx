@@ -1,0 +1,12 @@
+{{#a}}
+	{{name}}
+	{{age}}
+	{{#compare age 20}}
+		大于20
+		{{else}}
+		小于20
+	{{/compare}}
+	{{#info}}
+		{{show_index @index}}.{{../name}} favorite {{this}}
+	{{/info}}
+{{/a}}

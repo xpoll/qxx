@@ -1,0 +1,25 @@
+{
+  "item": {
+    "_all": {
+      "enabled": false
+    },
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "name": {
+        "type": "string",
+        "analyzer": "jieba",
+        "search_analyzer": "jieba_search",
+        "fields": {
+          "suggest": {
+            "type": "completion"
+          }
+        }
+      },
+      "updatedAt": {
+        "type": "date"
+      }
+    }
+  }
+}

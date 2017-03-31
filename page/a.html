@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>a</title>
+	<link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="dist/css/bootstrap-theme.min.css">
+	<style type="text/css">
+		div {
+			border:1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+
+
+<h1>你好，世界！</h1>
+<div class="container">
+  ...
+</div>
+
+
+<div class="container-fluid">
+ ...
+</div>
+
+<div class="row">
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+  <div class="col-md-1">.col-md-1</div>
+</div>
+<div class="row">
+  <div class="col-md-8">.col-md-8</div>
+  <div class="col-md-4">.col-md-4</div>
+</div>
+<div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4">.col-md-4</div>
+</div>
+<div class="row">
+  <div class="col-md-6">.col-md-6</div>
+  <div class="col-md-6">.col-md-6</div>
+</div>
+<br>
+<div class="container-fluid">
+	<div class="row">
+	  <div class="col-xs-12 col-sm-6 col-md-8">.col-xs-12 .col-sm-6 .col-md-8</div>
+	  <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+	</div>
+	<div class="row">
+	  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+	  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+	  <!-- Optional: clear the XS cols if their content doesn't match in height -->
+	  <div class="clearfix visible-xs-block"></div>
+	  <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+	</div>
+</div>
+<br>
+<div class="row">
+  <div class="col-xs-9">.col-xs-9</div>
+  <div class="col-xs-4 col-md-offset-4">.col-xs-4<br>Since 9 + 4 = 13 &gt; 12, this 4-column-wide div gets wrapped onto a new line as one contiguous unit.</div>
+  <div class="col-xs-6">.col-xs-6<br>Subsequent columns continue along the new line.</div>
+</div>
+<br>
+<del>This line of text is meant to be treated as deleted text.</del><br>
+<s>This line of text is meant to be treated as no longer accurate.</s><br>
+<ins>This line of text is meant to be treated as an addition to the document.</ins><br>
+<u>This line of text will render as underlined</u><br>
+<small>This line of text is meant to be treated as fine print.</small><br>
+<strong>rendered as bold text</strong><br>
+<em>rendered as italicized text</em><br>
+<p class="text-left">Left aligned text.</p>
+<p class="text-center">Center aligned text.</p>
+<p class="text-right">Right aligned text.</p>
+<p class="text-justify">Justified text.</p>
+<p class="text-nowrap">No wrap text.</p>
+
+<p class="text-lowercase">Lowercased text.</p>
+<p class="text-uppercase">Uppercased text.</p>
+<p class="text-capitalize">Capitalized text.</p>
+
+<abbr title="attribute">attr</abbr>
+<br>
+<abbr title="HyperText Markup Language" class="initialism">HTML</abbr>
+is the best thing since sliced bread.
+<br>
+<blockquote>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+</blockquote>
+
+<p class="bg-primary">...</p>
+<p class="bg-success">...</p>
+<p class="bg-info">...</p>
+<p class="bg-warning">...</p>
+<p class="bg-danger">...</p>
+
+<button type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+<img src="lm.ico" alt="..." class="img-rounded">
+<img src="lm.ico" alt="..." class="img-circle">
+<img src="lm.ico" alt="..." class="img-thumbnail">
+
+<p>
+  <button type="button" class="btn btn-primary btn-lg">Large button</button>
+  <button type="button" class="btn btn-default btn-lg">Large button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary">Default button</button>
+  <button type="button" class="btn btn-default">Default button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-sm">Small button</button>
+  <button type="button" class="btn btn-default btn-sm">Small button</button>
+</p>
+<p>
+  <button type="button" class="btn btn-primary btn-xs">Extra small button</button>
+  <button type="button" class="btn btn-default btn-xs">Extra small button</button>
+</p>
+
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Username</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="success">1</td>
+			<td class="active">Mark</td>
+			<td class="info">Thornton</td>
+			<td class="warning">Otto</td>
+		</tr>
+		<tr>
+			<td class="danger">2</td>
+			<td>Otto</td>
+			<td>Mark</td>
+			<td>Thornton</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>Mark</td>
+			<td>Thornton</td>
+			<td>Otto</td>
+		</tr>
+	</tbody>
+</table>
+
+<span class="glyphicon glyphicon-search"></span>
+<span class="glyphicon glyphicon-registration-mark"></span>
+
+<button type="button" class="btn btn-success glyphicon glyphicon-search success"></button>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="" alt="..." width="200px" height="100px">ddd
+
+      <div class="carousel-caption">
+        ...是的是的
+		    <h3>...</h3>
+		    <p>...</p>
+      </div>
+    </div>
+    <div class="item">
+      <img src="" alt="..." width="200px" height="100px">ad
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<script type="text/javascript" src="dist/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+	// $('#myModal').modal()                      // 以默认值初始化
+	// $('#myModal').modal({ keyboard: false })   // initialized with no keyboard
+	// $('#myModal').modal('show')                // 初始化后立即调用 show 方法
+  $('#myModal').on('show.bs.modal', function (e) {
+    alert("df")
+    return e.preventDefault() // 阻止模态框的展示
+  })
+
+</script>
+<div class="lmpagination"></div>
+<div id="page" data-total="100" data-size="10" data-current="99"></div>
+<script type="text/javascript">
+(function($, window, document, undefined) {
+  /**
+   * 请严格按照格式
+   * <div class="lmpagination"></div>
+   * <div id="page" data-total="100" data-size="10" data-current="99"></div>
+   * 第一个标签为固定, data-total为总数, data-size为每页大小, data-current为当前显示起始位数
+   * 
+   * 调用
+   * $('#page').lmpagination()
+   * $('.lmpagination').click(function(){
+   *    console.info($(this).data("go"))//分页ajax
+   * })
+   * 
+   **/
+  $.fn.lmpagination = function(options) {
+    var $total = $(this).data("total"), $size = $(this).data("size"), $current = $(this).data("current")
+    if (!(typeof $total === 'number' && $total%1 === 0)
+      || !(typeof $size === 'number' && $size%1 === 0)
+      || !(typeof $current === 'number' && $current%1 === 0)
+      || $total < 0 || $size <= 0 || $current < 0 || $current >= $total) {
+      console.info("分页数据格式不正确")
+      return
+    }
+    if ($total <= $size) return
+    $current = $current + 1
+    var size = $total%$size > 0 ? (parseInt($total/$size) + 1) : parseInt($total/$size)
+    var current = $current%$size > 0 ? (parseInt($current/$size) + 1) : parseInt($current/$size)
+    console.info(size, current)
+    if (size <= 8) {
+      for (var i = 1; i <= size; i++) {
+        temp += '<li><a>' + i + '</a></li>'
+      }
+    } else {
+      if (current <= 3) {
+        temp = ''
+          + '<li data-num="1"><a>1</a></li>'
+          + '<li data-num="2"><a>2</a></li>'
+          + '<li data-num="3"><a>3</a></li>'
+          + '<li class="disabled"><a>...</a></li>'
+          + '<li data-num="' + size + '"><a>' + size + '</a></li>'
+      } else if (current > (size - 3)) {
+        temp = ''
+        + '<li data-num="1"><a>1</a></li>'
+        + '<li class="disabled"><a>...</a></li>'
+        + '<li data-num="' + (size - 2) + '"><a>' + (size - 2) + '</a></li>'
+        + '<li data-num="' + (size - 1) + '"><a>' + (size - 1) + '</a></li>'
+        + '<li data-num="' + size + '"><a>' + size + '</a></li>'
+      } else {
+        temp = ''
+          + '<li data-num="1"><a>1</a></li>'
+          + '<li class="disabled"><a>...</a></li>'
+          + '<li data-num="' + (current - 1) + '"><a>' + (current - 1) + '</a></li>'
+          + '<li data-num="' + current + '"><a>' + current + '</a></li>'
+          + '<li data-num="' + (current + 1) + '"><a>' + (current + 1) + '</a></li>'
+          + '<li class="disabled"><a>...</a></li>'
+          + '<li data-num="' + size + '"><a>' + size + '</a></li>'
+      }
+    }
+    $content = ''
+    + '<ul class="pagination">'
+      + '<li data-num="' + ((current - 1) > 0 ? (current - 1) : current) + '" class="lmpagination-bz"><a>«</a></li>'
+      + temp
+      + '<li data-num="' + ((current + 1) > size ? current : (current + 1)) + '" class="lmpagination-bz"><a>»</a></li>'
+    + '</ul>'
+    $(this).html($content)
+    $.each($(this).find('li'), function(){
+      if ($(this).data('num') == current) {
+        if ($(this).hasClass('lmpagination-bz')) {
+          $(this).addClass("disabled")
+        } else {
+          $(this).addClass("active")
+        }
+      }
+    })
+    $(this).find('li').click(function(){
+      if ($(this).data("num") == current || $(this).hasClass("disabled")) return
+      $('.lmpagination').data("go", ($(this).data("num") - 1) * $size)
+      $('.lmpagination').click()
+    })
+  }
+})(jQuery, window, document);
+$('#page').lmpagination()
+$('.lmpagination').click(function(){
+  console.info($(this).data("go"))
+})
+</script>
+
+</body>
+</html>

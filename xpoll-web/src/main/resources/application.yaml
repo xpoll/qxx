@@ -1,0 +1,11 @@
+#spring:
+#  profiles:
+#    active: dev
+
+##################
+### log set
+##################
+logging:
+  file: /var/log/spring-boot.log
+  level.*: INFO
+  level.cn.blmdz: DEBUG
