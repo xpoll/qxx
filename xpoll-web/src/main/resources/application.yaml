@@ -1,11 +1,43 @@
-#spring:
-#  profiles:
-#    active: dev
-
-##################
-### log set
-##################
 logging:
   file: /var/log/spring-boot.log
   level.*: INFO
   level.cn.blmdz: DEBUG
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: cn.blmdz.model
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+  datasource:
+    #type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?autoReconnect=true&amp;useUnicode=true&amp;charaterEncoding=utf-8
+    username: root
+    password: root
+server:
+  context-path: /
+  port: 8082
+  session:
+    timeout: 1800
+
+pampas:
+  rootPath: D:/qxx/code-my/desktop
+  apps:
+    - key: PC
+      assetsHome: feebas
+  mvc:
+    ignoreInterceptors:
+      - Login
+      - Auth
+    customInterceptors:
+      #- loginInterceptor
+      #- authInterceptor
+  redis:
+    host: 127.0.0.1
+    port: 6379
+  design:
+    enable: true
+  locale: zh_CN
+  devMode: false

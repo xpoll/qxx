@@ -2,14 +2,14 @@ package cn.blmdz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import cn.blmdz.config.GlobalExceptionHandler;
 
 @Import(GlobalExceptionHandler.class)
 @SpringBootApplication
-@ComponentScan("cn.blmdz.component")
+@EnableWebMvc
 public class XpollApplication {
 
 	public static void main(String[] args) {

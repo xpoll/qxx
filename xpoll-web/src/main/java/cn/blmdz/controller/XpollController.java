@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class XpollController {
 
-	@RequestMapping(value="/", method=RequestMethod.GET)
+	@RequestMapping(value="/abc", method=RequestMethod.GET)
 	public String hello() {
 		int[] a = {1};
 		System.out.println(a[2]);
