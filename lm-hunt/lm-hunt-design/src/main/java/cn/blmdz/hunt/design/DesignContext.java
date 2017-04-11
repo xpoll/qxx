@@ -7,5 +7,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(excludeFilters = @Filter(Configuration.class))
 public class DesignContext {
-	static{System.out.println("DesignContext");}
 }

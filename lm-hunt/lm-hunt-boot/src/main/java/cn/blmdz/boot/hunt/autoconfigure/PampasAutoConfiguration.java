@@ -59,7 +59,6 @@ public class PampasAutoConfiguration {
 	@ConditionalOnProperty(prefix = "pampas.redis", name = { "jedisPool" })
 	public JedisTemplate jedisTemplate1() {
 		JedisPool jedisPool = applicationContext.getBean(properties.getRedis().getJedisPool(), JedisPool.class);
-		System.out.println("---------jedisTemplate init 1----------");
 		return new JedisTemplate(jedisPool);
 	}
 
@@ -78,7 +77,6 @@ public class PampasAutoConfiguration {
 				MoreObjects.firstNonNull(redisProperties.getTimeout(), Integer.valueOf(2000)).intValue(),
 				redisProperties.getPassword(),
 				MoreObjects.firstNonNull(redisProperties.getDatabase(), Integer.valueOf(0)).intValue());
-		System.out.println("---------jedisTemplate init 2----------");
 		return new JedisTemplate(jedisPool);
 	}
 
@@ -86,7 +84,6 @@ public class PampasAutoConfiguration {
 	@ConditionalOnProperty(prefix = "pampas", name = { "devMode" })
 	@EnableAspectJAutoProxy
 	public static class DebugLogAopConfiguration {
-		static{System.out.println("DebugLogAopConfiguration");}
 		@Bean
 		public ProfiledAspect debugAspect() {
 			return new ProfiledAspect();
@@ -98,13 +95,11 @@ public class PampasAutoConfiguration {
 	@ConditionalOnClass({ DesignContext.class })
 	@Import({ DesignContext.class })
 	public static class DesignEnableAutoConfiguration {
-		static{System.out.println("DesignEnableAutoConfiguration");}
 	}
 
 	@Configuration
 	@ConditionalOnProperty(prefix = "pampas", name = { "design.enable" }, havingValue = "false", matchIfMissing = true)
 	public static class DesignNotEnableAutoConfiguration {
-		static{System.out.println("DesignNotEnableAutoConfiguration");}
 		@Bean
 		public SettingHelper settingHelper() {
 			return new SettingHelper();
@@ -119,7 +114,6 @@ public class PampasAutoConfiguration {
 	@Configuration
 	@ConditionalOnProperty(value = { "pampas.dubbo.enable" }, havingValue = "true")
 	public static class DubboExecutorConfiguration {
-		static{System.out.println("DubboExecutorConfiguration");}
 		@Bean
 		public DubboHelper dubboHelper(ApplicationContext applicationContext) {
 			DubboHelper dubboHelper = new DubboHelper(applicationContext);

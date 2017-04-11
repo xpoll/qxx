@@ -13,6 +13,7 @@ import com.github.jknack.handlebars.io.TemplateSource;
 import cn.blmdz.hunt.common.util.MapBuilder;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.utils.FileLoader;
+import cn.blmdz.hunt.engine.utils.FileLoader.Resp;
 import cn.blmdz.hunt.engine.utils.FileLoaderHelper;
 import cn.blmdz.hunt.engine.utils.Protocol;
 
@@ -45,7 +46,7 @@ public class GreatTemplateLoader extends AbstractTemplateLoader {
 		}
 	}
 
-	private FileLoader.Resp getResource(String location) throws IOException {
+	private Resp getResource(String location) throws IOException {
 		boolean isComponent = location.startsWith("component:");
 		if (isComponent) {
 			location = location.substring("component:".length());
@@ -57,6 +58,6 @@ public class GreatTemplateLoader extends AbstractTemplateLoader {
 			location = home + (isComponent ? "components/" : "views/") + this.normalize(location);
 		}
 
-		return this.fileLoaderHelper.load(location + (String) PROTOCOL_SUFFIXS.get(protocol));
+		return this.fileLoaderHelper.load(location + PROTOCOL_SUFFIXS.get(protocol));
 	}
 }

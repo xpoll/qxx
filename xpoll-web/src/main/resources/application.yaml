@@ -23,7 +23,8 @@ server:
     timeout: 1800
 
 pampas:
-  rootPath: D:/qxx/code-my/desktop
+#  rootPath: D:/qxx/code-my/desktop
+  rootPath: /lm/works
   apps:
     - key: PC
       assetsHome: feebas
@@ -40,4 +41,4 @@ pampas:
   design:
     enable: true
   locale: zh_CN
-  devMode: false
+  devMode: true
