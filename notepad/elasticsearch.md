@@ -31,3 +31,5 @@ curl -XPOST http://127.0.0.1:9200/lm/test/1/_create -d '{"name":"lili","age":30,
 
 curl -XDELETE http://127.0.0.1:9200/lm/test/AVsYMiKUVEhI-dMU3KQo
 
+
+index/_analyze?analyzer=ik&pretty=true&text="中国有13亿人口"

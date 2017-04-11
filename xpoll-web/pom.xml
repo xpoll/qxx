@@ -17,7 +17,20 @@
 	</properties>
 	
 	<dependencies>
-	
+	<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+			
+	<!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
+		<dependency>
+		    <groupId>org.elasticsearch</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		    <version>2.4.4</version>
+		    <scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>cn.blmdz.hunt</groupId>
 			<artifactId>lm-hunt-boot</artifactId>
