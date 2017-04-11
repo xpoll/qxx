@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.blmdz.hunt</groupId>
 	<artifactId>lm-hunt</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>lm-hunt-common</module>
@@ -19,7 +19,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	
 		<lm-home.version>0.0.1-SNAPSHOT</lm-home.version>
-		<lm-hunt.version>0.0.1-SNAPSHOT</lm-hunt.version>
+		<lm-hunt.version>0.0.2-SNAPSHOT</lm-hunt.version>
 		
 		<dubbo.version>2.5.3</dubbo.version>
 		<guava.version>19.0</guava.version>

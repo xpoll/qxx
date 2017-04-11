@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>cn.blmdz.hunt</groupId>
 			<artifactId>lm-hunt-boot</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	
 		<!-- spring-boot -->
