@@ -3,12 +3,16 @@ package cn.blmdz.elasticsearch;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.deletebyquery.DeleteByQueryAction;
+import org.elasticsearch.action.deletebyquery.DeleteByQueryRequestBuilder;
+import org.elasticsearch.action.deletebyquery.DeleteByQueryResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -18,6 +22,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.plugin.deletebyquery.DeleteByQueryPlugin;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptService.ScriptType;
 import org.elasticsearch.search.SearchHit;
@@ -34,10 +39,12 @@ public class Test1 {
 
 	public static void main(String[] args) {
 		try {
-			Client client = TransportClient.builder().build()
+			Client client = TransportClient
+					.builder()
+					.addPlugin(DeleteByQueryPlugin.class)
+					.build()
 					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
 			System.out.println("start");
-			delete(client);
 			// ######### 创建
 			create(client);
 			// ######### 查询
@@ -49,8 +56,12 @@ public class Test1 {
 //			updateScript(client);
 			// ######### 更新或创建
 //			upsert(client);
-			// ######### 更新或创建
+			// ######### 删除
 //			delete(client);
+//			deleteByQuery(client);
+			
+//			ESUtil.deleteIndex(client, "blog");
+			
 
 			client.close();
 			System.out.println(client);
@@ -59,6 +70,16 @@ public class Test1 {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void deleteByQuery(Client client) {
+		DeleteByQueryResponse response = new DeleteByQueryRequestBuilder(client, DeleteByQueryAction.INSTANCE)
+				.setIndices("blog")
+				.setTypes("article")
+				.setSource("{\"query\":{\"match_all\":{}}}")
+				.get();
+		
+		System.out.println(response.getTotalDeleted());
 	}
 	
 	public static void delete(Client client) {
@@ -94,7 +115,7 @@ public class Test1 {
 	
 	public static void updateDoc2(Client client) throws IOException {
 		client.prepareUpdate("blog", "article", "AVtbrmmLto60729jEv_1")
-		.setDoc(JsonMapper.nonDefaultMapper().toJson(new Blog(8, "other知识", "2016-06-19", "更改4")))
+		.setDoc(JsonMapper.nonDefaultMapper().toJson(new Blog(8, "other知识", new Date(), "更改4")))
 		.get();
 	}
 
@@ -122,7 +143,7 @@ public class Test1 {
 		BulkRequestBuilder bulkRequest=client.prepareBulk();
 		
 		for (String string : list()) {
-			bulkRequest.add(client.prepareIndex("test", "article").setSource(string));
+			bulkRequest.add(client.prepareIndex("blog", "article").setSource(string));
 		}
 		
 		BulkResponse response = bulkRequest.get();
@@ -134,14 +155,14 @@ public class Test1 {
 
 	public static List<String> list() {
 		List<String> list = Lists.newArrayList();
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(1, "git简介", "2016-06-19", "SVN与Git最主要的区别...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(2, "Java中泛型的介绍与简单使用", "2016-06-19", "学习目标 掌握泛型的产生意义...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(3, "SQL基本操作", "2016-06-19", "基本操作：CRUD ...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(4, "Hibernate框架基础", "2016-06-19", "Hibernate框架基础...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(5, "Git基本知识git", "2016-06-19", "Shell是什么...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(6, "C++基本知识", "2016-06-19", "Shell是什么...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(7, "Mysql基本知识", "2016-06-19", "git是什么...")));
-		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(8, "other知识", "2016-06-19", "git是什么...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(1, "git简介", new Date(), "SVN与Git最主要的区别...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(2, "Java中泛型的介绍与简单使用", new Date(), "学习目标 掌握泛型的产生意义...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(3, "SQL基本操作", new Date(), "基本操作：CRUD ...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(4, "Hibernate框架基础", new Date(), "Hibernate框架基础...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(5, "Git基本知识git", new Date(), "Shell是什么...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(6, "C++基本知识", new Date(), "Shell是什么...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(7, "Mysql基本知识", new Date(), "git是什么...")));
+		list.add(JsonMapper.nonDefaultMapper().toJson(new Blog(8, "other知识", new Date(), "git是什么...")));
 		return list;
 	}
 
@@ -151,7 +172,7 @@ public class Test1 {
 	public static class Blog {
 		private Integer id;
 		private String title;
-		private String postTime;
+		private Date time;
 		private String content;
 	}
 }
