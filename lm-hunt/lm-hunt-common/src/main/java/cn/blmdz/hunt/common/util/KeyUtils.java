@@ -4,10 +4,6 @@ import com.google.common.base.CaseFormat;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-/**
- * email:dong_peiji@huateng.com
- * Created by 董培基 on 2016/3/3.
- */
 public abstract class KeyUtils {
 
     public static <T> String entityCount(Class<T> entityClass) {

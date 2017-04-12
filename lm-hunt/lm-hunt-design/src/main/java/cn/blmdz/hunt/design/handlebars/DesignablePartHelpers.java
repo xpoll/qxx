@@ -67,17 +67,17 @@ public class DesignablePartHelpers {
 				boolean isDesignMode = options.get(RenderConstants.DESIGN_MODE) != null;
 				boolean isEditTemplate = options.get(RenderConstants.EDIT_TEMPLATE) != null;
 				boolean hasAuth = true;
-				if (isDesignMode && options.hash.containsKey("rule")) {
-					List<String> rules = Splitters.COMMA
-							.splitToList((CharSequence) options.hash("rule"));
-					BaseUser currentUser = UserUtil.getCurrentUser();
-					String userTypeStr = currentUser.getType() == null ? ""
-							: currentUser.getType().toString();
-					if (!rules.contains(userTypeStr)) {
-						hasAuth = false;
-					}
-				}
-
+//				if (isDesignMode && options.hash.containsKey("rule")) {
+//					List<String> rules = Splitters.COMMA
+//							.splitToList((CharSequence) options.hash("rule"));
+//					BaseUser currentUser = UserUtil.getCurrentUser();
+//					String userTypeStr = currentUser.getType() == null ? ""
+//							: currentUser.getType().toString();
+//					if (!rules.contains(userTypeStr)) {
+//						hasAuth = false;
+//					}
+//				}
+// TODO
 				String partsKey = PARTS_THIS_KEY;
 				Boolean isTemplate = options.hash("template", Boolean.valueOf(false));
 				Map<String, Map<String, String>> allParts;

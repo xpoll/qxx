@@ -166,7 +166,8 @@ public class Sites {
 	}
 
 	private void fillSite(Site site) {
-		site.setUserId(UserUtil.getUserId());
+//		site.setUserId(UserUtil.getUserId()); TODO
+		site.setUserId(1L);
 		Layout layout = configService.findLayout(site.getApp(),
 				site.getLayout());
 		if (layout == null) {

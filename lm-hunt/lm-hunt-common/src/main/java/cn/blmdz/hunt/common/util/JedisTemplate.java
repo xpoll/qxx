@@ -15,17 +15,17 @@ public class JedisTemplate {
         this.jedisPool = jedisPool;
     }
 
-    public <T> T execute(JedisTemplate.JedisAction<T> jedisAction) throws JedisException {
+    public <T> T execute(JedisAction<T> jedisAction) throws JedisException {
         return this.execute(jedisAction, 0);
     }
 
-    public <T> T execute(JedisTemplate.JedisAction<T> jedisAction, int dbIndex) throws JedisException {
+    public <T> T execute(JedisAction<T> jedisAction, int dbIndex) throws JedisException {
         Jedis jedis = null;
         boolean broken = false;
 
         T e;
         try {
-            jedis = (Jedis)this.jedisPool.getResource();
+            jedis = this.jedisPool.getResource();
             jedis.select(dbIndex);
             e = jedisAction.action(jedis);
         } catch (JedisConnectionException var9) {
@@ -39,16 +39,16 @@ public class JedisTemplate {
         return e;
     }
 
-    public void execute(JedisTemplate.JedisActionNoResult jedisAction) throws JedisException {
-        this.execute((JedisTemplate.JedisActionNoResult)jedisAction, 0);
+    public void execute(JedisActionNoResult jedisAction) throws JedisException {
+        this.execute(jedisAction, 0);
     }
 
-    public void execute(JedisTemplate.JedisActionNoResult jedisAction, int dbIndex) throws JedisException {
+    public void execute(JedisActionNoResult jedisAction, int dbIndex) throws JedisException {
         Jedis jedis = null;
         boolean broken = false;
 
         try {
-            jedis = (Jedis)this.jedisPool.getResource();
+            jedis = this.jedisPool.getResource();
             jedis.select(dbIndex);
             jedisAction.action(jedis);
         } catch (JedisConnectionException var9) {

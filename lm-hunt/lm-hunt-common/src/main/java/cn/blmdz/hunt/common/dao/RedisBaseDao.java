@@ -16,11 +16,6 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
 
-/**
- * redis 基础模板类
- * email:dong_peiji@huateng.com
- * Created by 董培基 on 2016/3/3.
- */
 public abstract class RedisBaseDao<T> {
 
     public final StringHashMapper<T> stringHashMapper;

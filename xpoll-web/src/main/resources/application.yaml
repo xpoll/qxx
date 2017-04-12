@@ -23,8 +23,8 @@ server:
     timeout: 1800
 
 pampas:
-  rootPath: D:/qxx/code-my/desktop
-#  rootPath: /lm/works
+#  rootPath: D:/qxx/code-my/desktop
+  rootPath: /lm/works
   apps:
     - key: PC
       assetsHome: feebas

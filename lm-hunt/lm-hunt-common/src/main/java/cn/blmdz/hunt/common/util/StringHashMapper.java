@@ -13,8 +13,8 @@ public class StringHashMapper<T> {
 	private final JavaType mapType;
 
 	public StringHashMapper(Class<T> type) {
-		this.userType = this.mapper.createCollectionType(HashMap.class, String.class, String.class);
-		this.mapType = this.mapper.getMapper().constructType(type);
+		this.mapType = this.mapper.createCollectionType(HashMap.class, String.class, String.class);
+		this.userType = this.mapper.getMapper().constructType(type);
 	}
 
 	@SuppressWarnings("unchecked")
