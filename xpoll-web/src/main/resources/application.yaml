@@ -1,21 +1,7 @@
 logging:
-  file: /var/log/spring-boot.log
+  file: /home/xpoll/log/xpoll-web.log
   level.*: INFO
   level.cn.blmdz: DEBUG
-mybatis:
-  mapper-locations: classpath*:mapper/*Mapper.xml
-  type-aliases-package: cn.blmdz.model
-spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/jsp/
-      suffix: .jsp
-  datasource:
-    #type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/test?autoReconnect=true&amp;useUnicode=true&amp;charaterEncoding=utf-8
-    username: root
-    password: root
 server:
   context-path: /
   port: 8082
@@ -23,8 +9,7 @@ server:
     timeout: 1800
 
 pampas:
-#  rootPath: D:/qxx/code-my/desktop
-  rootPath: /lm/works
+  rootPath: /home/xpoll
   apps:
     - key: PC
       assetsHome: feebas
