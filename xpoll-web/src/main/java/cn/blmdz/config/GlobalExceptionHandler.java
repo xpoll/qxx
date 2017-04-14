@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.blmdz.exception.GlobalException;
-import cn.blmdz.model.Response;
+import cn.blmdz.hunt.common.model.Response;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,9 +24,10 @@ public class GlobalExceptionHandler {
     		Exception e) throws Exception {
 		if (e instanceof GlobalException) {
 			log.debug("GlobalException:{}", e.getMessage());
-			return Response.faild().msg(e.getMessage());
+			
+			return Response.fail(e.getMessage());
 		}
 		log.debug("Exception:{}", e.getMessage());
-		return Response.faild().msg("系统异常");
+		return Response.fail("系统异常");
     }
 }

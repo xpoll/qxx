@@ -27,3 +27,9 @@ pampas:
     enable: true
   locale: zh_CN
   devMode: true
+  
+oos:
+  endpoint: http://oss-cn-shanghai.aliyuncs.com
+  accessKeyId: LTAIOucdAfA5jDC1
+  accessKeySecret: 3Cx6UXWh1bb8wnYK2D1hti7jYhYHeX
+  bucketName: xpoll

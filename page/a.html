@@ -242,96 +242,26 @@ is the best thing since sliced bread.
     alert("df")
     return e.preventDefault() // 阻止模态框的展示
   })
+  // $.ajax({
+  //   url: 'http://localhost:9200/_search',
+  //   type: 'post',
+  //   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+  //   dataType: 'json',
+  //   data: {
+  //     query: {
+  //       match_all: {
 
-</script>
-<div class="lmpagination"></div>
-<div id="page" data-total="100" data-size="10" data-current="99"></div>
-<script type="text/javascript">
-(function($, window, document, undefined) {
-  /**
-   * 请严格按照格式
-   * <div class="lmpagination"></div>
-   * <div id="page" data-total="100" data-size="10" data-current="99"></div>
-   * 第一个标签为固定, data-total为总数, data-size为每页大小, data-current为当前显示起始位数
-   * 
-   * 调用
-   * $('#page').lmpagination()
-   * $('.lmpagination').click(function(){
-   *    console.info($(this).data("go"))//分页ajax
-   * })
-   * 
-   **/
-  $.fn.lmpagination = function(options) {
-    var $total = $(this).data("total"), $size = $(this).data("size"), $current = $(this).data("current")
-    if (!(typeof $total === 'number' && $total%1 === 0)
-      || !(typeof $size === 'number' && $size%1 === 0)
-      || !(typeof $current === 'number' && $current%1 === 0)
-      || $total < 0 || $size <= 0 || $current < 0 || $current >= $total) {
-      console.info("分页数据格式不正确")
-      return
-    }
-    if ($total <= $size) return
-    $current = $current + 1
-    var size = $total%$size > 0 ? (parseInt($total/$size) + 1) : parseInt($total/$size)
-    var current = $current%$size > 0 ? (parseInt($current/$size) + 1) : parseInt($current/$size)
-    console.info(size, current)
-    if (size <= 8) {
-      for (var i = 1; i <= size; i++) {
-        temp += '<li><a>' + i + '</a></li>'
-      }
-    } else {
-      if (current <= 3) {
-        temp = ''
-          + '<li data-num="1"><a>1</a></li>'
-          + '<li data-num="2"><a>2</a></li>'
-          + '<li data-num="3"><a>3</a></li>'
-          + '<li class="disabled"><a>...</a></li>'
-          + '<li data-num="' + size + '"><a>' + size + '</a></li>'
-      } else if (current > (size - 3)) {
-        temp = ''
-        + '<li data-num="1"><a>1</a></li>'
-        + '<li class="disabled"><a>...</a></li>'
-        + '<li data-num="' + (size - 2) + '"><a>' + (size - 2) + '</a></li>'
-        + '<li data-num="' + (size - 1) + '"><a>' + (size - 1) + '</a></li>'
-        + '<li data-num="' + size + '"><a>' + size + '</a></li>'
-      } else {
-        temp = ''
-          + '<li data-num="1"><a>1</a></li>'
-          + '<li class="disabled"><a>...</a></li>'
-          + '<li data-num="' + (current - 1) + '"><a>' + (current - 1) + '</a></li>'
-          + '<li data-num="' + current + '"><a>' + current + '</a></li>'
-          + '<li data-num="' + (current + 1) + '"><a>' + (current + 1) + '</a></li>'
-          + '<li class="disabled"><a>...</a></li>'
-          + '<li data-num="' + size + '"><a>' + size + '</a></li>'
-      }
-    }
-    $content = ''
-    + '<ul class="pagination">'
-      + '<li data-num="' + ((current - 1) > 0 ? (current - 1) : current) + '" class="lmpagination-bz"><a>«</a></li>'
-      + temp
-      + '<li data-num="' + ((current + 1) > size ? current : (current + 1)) + '" class="lmpagination-bz"><a>»</a></li>'
-    + '</ul>'
-    $(this).html($content)
-    $.each($(this).find('li'), function(){
-      if ($(this).data('num') == current) {
-        if ($(this).hasClass('lmpagination-bz')) {
-          $(this).addClass("disabled")
-        } else {
-          $(this).addClass("active")
-        }
-      }
-    })
-    $(this).find('li').click(function(){
-      if ($(this).data("num") == current || $(this).hasClass("disabled")) return
-      $('.lmpagination').data("go", ($(this).data("num") - 1) * $size)
-      $('.lmpagination').click()
-    })
-  }
-})(jQuery, window, document);
-$('#page').lmpagination()
-$('.lmpagination').click(function(){
-  console.info($(this).data("go"))
-})
+  //       }
+  //     }
+  //   },
+  //   success: function(data) {
+  //     console.info(data)
+  //   },
+  //   error: function(data, b) {
+  //     console.info(data)
+  //     console.info(b)
+  //   }
+  // })
 </script>
 
 </body>
