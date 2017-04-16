@@ -3,28 +3,27 @@ package cn.blmdz.hunt.engine.dao;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisAction;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
 @Repository
 public class RedisFileDao {
-	@Autowired(required = false)
-	@Qualifier("pampasJedisTemplate")
-	private JedisTemplate jedisTemplate;
+	@Autowired
+	private JedisExecutor jedisExecutor;
 
 	public void save(final String path, final String content) {
 		this.checkSupport();
-		this.jedisTemplate.execute(new JedisActionNoResult() {
-			public void action(Jedis jedis) {
+		this.jedisExecutor.execute(new JedisCallBackNoResult() {
+			@Override
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				RedisFileDao.this.save(path, content, t);
 				t.exec();
@@ -41,8 +40,9 @@ public class RedisFileDao {
 
 	public void delete(final String path) {
 		this.checkSupport();
-		this.jedisTemplate.execute(new JedisActionNoResult() {
-			public void action(Jedis jedis) {
+		this.jedisExecutor.execute(new JedisCallBackNoResult() {
+			@Override
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				RedisFileDao.this.delete(path, t);
 				t.exec();
@@ -57,8 +57,9 @@ public class RedisFileDao {
 
 	public Long getUpdateTime(final String path) {
 		this.checkSupport();
-		return this.jedisTemplate.execute(new JedisAction<Long>() {
-			public Long action(Jedis jedis) {
+		return this.jedisExecutor.execute(new JedisCallBack<Long>() {
+			@Override
+			public Long execute(Jedis jedis) {
 				String millisStr = jedis.hget(RedisFileDao.this.key(path), "updateAt");
 				return Strings.isNullOrEmpty(millisStr) ? null : Long.valueOf(millisStr);
 			}
@@ -67,8 +68,9 @@ public class RedisFileDao {
 
 	public String getContent(final String path) {
 		this.checkSupport();
-		return this.jedisTemplate.execute(new JedisAction<String>() {
-			public String action(Jedis jedis) {
+		return this.jedisExecutor.execute(new JedisCallBack<String>() {
+			@Override
+			public String execute(Jedis jedis) {
 				return jedis.hget(RedisFileDao.this.key(path), "content");
 			}
 		});
@@ -79,8 +81,8 @@ public class RedisFileDao {
 	}
 
 	private void checkSupport() {
-		if (this.jedisTemplate == null) {
-			throw new IllegalStateException("jedisTemplate not injected, RedisFileDao can not work");
+		if (this.jedisExecutor == null) {
+			throw new IllegalStateException("jedisExecutor not injected, RedisFileDao can not work");
 		}
 	}
 }

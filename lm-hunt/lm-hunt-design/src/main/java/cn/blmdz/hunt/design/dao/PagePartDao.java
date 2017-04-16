@@ -3,68 +3,63 @@ package cn.blmdz.hunt.design.dao;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisAction;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
 @Repository
 public class PagePartDao {
-	private JedisTemplate template;
-
 	@Autowired
-	public PagePartDao(@Qualifier("pampasJedisTemplate") JedisTemplate template) {
-		this.template = template;
-	}
+	private JedisExecutor jedisExecutor;
 
 	public boolean isExists(final String app, final String key, final boolean isRelease) {
-		return template.execute(new JedisAction<Boolean>() {
+		return jedisExecutor.execute(new JedisCallBack<Boolean>() {
 			@Override
-			public Boolean action(Jedis jedis) {
-				return jedis.exists(PagePartDao.key(app, key, isRelease));
+			public Boolean execute(Jedis jedis) {
+				return jedis.exists(key(app, key, isRelease));
 			}
 		}).booleanValue();
 	}
 
 	public Map<String, String> findByKey(final String app, final String key, final boolean isRelease) {
-		return template.execute(new JedisAction<Map<String, String>>() {
+		return jedisExecutor.execute(new JedisCallBack<Map<String, String>>() {
 			@Override
-			public Map<String, String> action(Jedis jedis) {
-				return jedis.hgetAll(PagePartDao.key(app, key, isRelease));
+			public Map<String, String> execute(Jedis jedis) {
+				return jedis.hgetAll(key(app, key, isRelease));
 			}
 		});
 	}
 
 	public void put(final String app, final String key, final Map<String, String> parts, final boolean isRelease) {
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
-				jedis.hmset(PagePartDao.key(app, key, isRelease), parts);
+			public void execute(Jedis jedis) {
+				jedis.hmset(key(app, key, isRelease), parts);
 			}
 		});
 	}
 
 	public void put(final String app, final String key, final String partKey, final String part, final boolean isRelease) {
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
-				jedis.hset(PagePartDao.key(app, key, isRelease), partKey, part);
+			public void execute(Jedis jedis) {
+				jedis.hset(key(app, key, isRelease), partKey, part);
 			}
 		});
 	}
 
 	public void replace(final String app, final String key, final Map<String, String> parts, final boolean isRelease) {
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
-				t.del(PagePartDao.key(app, key, isRelease));
+				t.del(key(app, key, isRelease));
 				if (parts != null && !parts.isEmpty()) {
-					t.hmset(PagePartDao.key(app, key, isRelease), parts);
+					t.hmset(key(app, key, isRelease), parts);
 				}
 
 				t.exec();
@@ -73,9 +68,9 @@ public class PagePartDao {
 	}
 
 	public void delete(final String app, final String key) {
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				delete(app, key, t);
 				t.exec();
@@ -83,12 +78,12 @@ public class PagePartDao {
 		});
 	}
 
-	public void delete(String app, String key, Transaction t) {
+	protected void delete(String app, String key, Transaction t) {
 		t.del(key(app, key, true));
 		t.del(key(app, key, false));
 	}
 
-	public static String key(String app, String key, boolean isRelease) {
+	protected static String key(String app, String key, boolean isRelease) {
 		return isRelease ? "app:" + app + ":page-part-release:" + key : "app:"
 				+ app + ":page-part:" + key;
 	}

@@ -4,16 +4,14 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.dao.RedisBaseDao;
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisAction;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.hunt.common.util.KeyUtils;
 import cn.blmdz.hunt.design.medol.Site;
 import redis.clients.jedis.Jedis;
@@ -21,9 +19,10 @@ import redis.clients.jedis.Transaction;
 
 @Repository
 public class SiteDao extends RedisBaseDao<Site> {
+	
 	@Autowired
-	public SiteDao(@Qualifier("pampasJedisTemplate") JedisTemplate template) {
-		super(template);
+	public SiteDao(JedisExecutor jedisExecutor) {
+		super(jedisExecutor);
 	}
 
 	public void create(Transaction t, Site site, boolean userOnly) {
@@ -57,9 +56,9 @@ public class SiteDao extends RedisBaseDao<Site> {
 	}
 
 	public Site findByDomain(final String domain) {
-		String siteId = template.execute(new JedisAction<String>() {
+		String siteId = super.jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
-			public String action(Jedis jedis) {
+			public String execute(Jedis jedis) {
 				return jedis.get(SiteDao.keyByDomain(domain));
 			}
 		});
@@ -68,9 +67,9 @@ public class SiteDao extends RedisBaseDao<Site> {
 	}
 
 	public Site findBySubdomain(final String subdomain) {
-		String siteId = template.execute(new JedisAction<String>() {
+		String siteId =  super.jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
-			public String action(Jedis jedis) {
+			public String execute(Jedis jedis) {
 				return jedis.get(SiteDao.keyBySubDomain(subdomain));
 			}
 		});
@@ -84,9 +83,9 @@ public class SiteDao extends RedisBaseDao<Site> {
 		if (!Objects.equal(exist.getApp(), site.getApp()))
 			throw new IllegalArgumentException("can\'t change site\'s app");
 		
-		template.execute(new JedisActionNoResult() {
+		 super.jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				Long id = site.getId();
 				t.hmset(KeyUtils.entityId(Site.class, id.longValue()), stringHashMapper.toHash(site));
@@ -104,14 +103,13 @@ public class SiteDao extends RedisBaseDao<Site> {
 	}
 
 	public void cleanSiteIndex(Long siteId, Transaction t) {
-		t.hdel(KeyUtils.entityId(Site.class, siteId.longValue()),
-				new String[] { "index" });
+		t.hdel(KeyUtils.entityId(Site.class, siteId.longValue()), new String[] { "index" });
 	}
 
 	public List<Site> findByUserId(String app, final long userId) {
-		Set<String> ids = template.execute(new JedisAction<Set<String>>() {
+		Set<String> ids =  super.jedisExecutor.execute(new JedisCallBack<Set<String>>() {
 			@Override
-			public Set<String> action(Jedis jedis) {
+			public Set<String> execute(Jedis jedis) {
 				return jedis.smembers(SiteDao.keyUserSites(Long.valueOf(userId)));
 			}
 		});
@@ -119,28 +117,28 @@ public class SiteDao extends RedisBaseDao<Site> {
 	}
 
 	public List<Site> listAll() {
-		Set<String> ids = template.execute(new JedisAction<Set<String>>() {
+		Set<String> ids =  super.jedisExecutor.execute(new JedisCallBack<Set<String>>() {
 			@Override
-			public Set<String> action(Jedis jedis) {
+			public Set<String> execute(Jedis jedis) {
 				return jedis.smembers(SiteDao.keySites());
 			}
 		});
 		return findByIds(ids);
 	}
 
-	public static String keySites() {
+	protected static String keySites() {
 		return "sites";
 	}
 
-	public static String keyUserSites(Long userId) {
+	protected static String keyUserSites(Long userId) {
 		return "user:" + userId + ":sites";
 	}
 
-	public static String keyByDomain(String domain) {
+	protected static String keyByDomain(String domain) {
 		return "site:domain:" + domain;
 	}
 
-	public static String keyBySubDomain(String subDomain) {
+	protected static String keyBySubDomain(String subDomain) {
 		return "site:sub-domain:" + subDomain;
 	}
 }

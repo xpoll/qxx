@@ -3,15 +3,14 @@ package cn.blmdz.hunt.design.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.hunt.design.dao.PageDao;
 import cn.blmdz.hunt.design.dao.SiteDao;
 import cn.blmdz.hunt.design.medol.Page;
@@ -28,8 +27,7 @@ public class SiteServiceImpl implements SiteService {
 	@Autowired
 	private PageDao pageDao;
 	@Autowired
-	@Qualifier("pampasJedisTemplate")
-	private JedisTemplate template;
+	private JedisExecutor jedisExecutor;
 	@Autowired
 	private PagePartService pagePartService;
 
@@ -42,9 +40,9 @@ public class SiteServiceImpl implements SiteService {
 		checkDomain(site);
 		Long siteId = siteDao.newId();
 		site.setId(siteId);
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				siteDao.create(t, site, userOnly);
 				t.exec();
@@ -58,9 +56,9 @@ public class SiteServiceImpl implements SiteService {
 		final Site site = siteDao.findById(siteId);
 		if (site != null) {
 			final List<Page> pages = pageDao.listBySite(siteId);
-			template.execute(new JedisActionNoResult() {
+			jedisExecutor.execute(new JedisCallBackNoResult() {
 				@Override
-				public void action(Jedis jedis) {
+				public void execute(Jedis jedis) {
 					Transaction t = jedis.multi();
 					siteDao.delete(t, site);
 
@@ -121,9 +119,9 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public void clearIndex(final Long siteId) {
-		template.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				siteDao.cleanSiteIndex(siteId, t);
 				t.exec();

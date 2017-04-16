@@ -1,53 +1,46 @@
 package cn.blmdz.hunt.design.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisAction;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import redis.clients.jedis.Jedis;
 
 @Repository
 public class ItemCustomRedisDao {
-	private final JedisTemplate jedisTemplate;
-
 	@Autowired
-	public ItemCustomRedisDao(@Qualifier("pampasJedisTemplate") JedisTemplate jedisTemplate) {
-		this.jedisTemplate = jedisTemplate;
-	}
+	private JedisExecutor jedisExecutor;
 
 	public void createOrUpdate(final long itemId, final String htmlCode) {
-		jedisTemplate.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
-				jedis.set(ItemCustomRedisDao.keyByItemId(Long.valueOf(itemId)),
-						htmlCode);
+			public void execute(Jedis jedis) {
+				jedis.set(keyByItemId(itemId), htmlCode);
 			}
 		});
 	}
 
 	public String findById(final long itemId) {
-		return jedisTemplate.execute(new JedisAction<String>() {
+		return jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
-			public String action(Jedis jedis) {
-				return jedis.get(ItemCustomRedisDao.keyByItemId(Long
-						.valueOf(itemId)));
+			public String execute(Jedis jedis) {
+				return jedis.get(keyByItemId(itemId));
 			}
 		});
 	}
 
 	public void delete(final long itemId) {
-		jedisTemplate.execute(new JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
-				jedis.del(ItemCustomRedisDao.keyByItemId(Long.valueOf(itemId)));
+			public void execute(Jedis jedis) {
+				jedis.del(keyByItemId(itemId));
 			}
 		});
 	}
 
-	public static String keyByItemId(Long itemId) {
+	protected static String keyByItemId(Long itemId) {
 		return "item-custom:" + itemId;
 	}
 }

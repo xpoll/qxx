@@ -4,17 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
-import cn.blmdz.hunt.common.dao.RedisBaseDao;
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisAction;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.hunt.common.util.KeyUtils;
 import cn.blmdz.hunt.design.medol.Page;
 import redis.clients.jedis.Jedis;
@@ -23,8 +21,8 @@ import redis.clients.jedis.Transaction;
 @Repository
 public class PageDao extends RedisBaseDao<Page> {
 	@Autowired
-	public PageDao(@Qualifier("pampasJedisTemplate") JedisTemplate template) {
-		super(template);
+	public PageDao(JedisExecutor jedisExecutor) {
+		super(jedisExecutor);
 	}
 
 	public Page findById(Long id) {
@@ -37,23 +35,20 @@ public class PageDao extends RedisBaseDao<Page> {
 	}
 
 	public Long findIdByPath(final Long siteId, final String path) {
-		return template.execute(new JedisAction<Long>() {
+		return super.jedisExecutor.execute(new JedisCallBack<Long>() {
 			@Override
-			public Long action(Jedis jedis) {
-				String pageIdStr = jedis.hget(PageDao.keyForSitePages(siteId),
-						path);
-				return Strings.isNullOrEmpty(pageIdStr) ? null : Long
-						.valueOf(pageIdStr);
+			public Long execute(Jedis jedis) {
+				String pageIdStr = jedis.hget(keyForSitePages(siteId), path);
+				return Strings.isNullOrEmpty(pageIdStr) ? null : Long.valueOf(pageIdStr);
 			}
 		});
 	}
 
 	public List<Page> listBySite(final Long siteId) {
-		return template.execute(new JedisAction<List<Page>>() {
+		return super.jedisExecutor.execute(new JedisCallBack<List<Page>>() {
 			@Override
-			public List<Page> action(Jedis jedis) {
-				Map<String, String> pageIds = jedis.hgetAll(PageDao
-						.keyForSitePages(siteId));
+			public List<Page> execute(Jedis jedis) {
+				Map<String, String> pageIds = jedis.hgetAll(keyForSitePages(siteId));
 				List<Page> result = Lists.newArrayList();
 
 				for (String pageIdStr : pageIds.values()) {
@@ -68,9 +63,9 @@ public class PageDao extends RedisBaseDao<Page> {
 	}
 
 	public Long create(final Page page) {
-		template.execute(new JedisActionNoResult() {
+		super.jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				create(page, t);
 				t.exec();
@@ -90,13 +85,13 @@ public class PageDao extends RedisBaseDao<Page> {
 		final Page exists = findById(page.getId());
 		page.setSiteId(exists.getSiteId());
 		page.setApp(exists.getApp());
-		template.execute(new JedisActionNoResult() {
+		super.jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
 				if (!Strings.isNullOrEmpty(page.getPath()) && !Objects.equal(page.getPath(), exists.getPath())) {
-					t.hdel(PageDao.keyForSitePages(page.getSiteId()), new String[] { exists.getPath() });
-					t.hset(PageDao.keyForSitePages(page.getSiteId()), page.getPath(), page.getId().toString());
+					t.hdel(keyForSitePages(page.getSiteId()), new String[] { exists.getPath() });
+					t.hset(keyForSitePages(page.getSiteId()), page.getPath(), page.getId().toString());
 				}
 
 				t.hmset(KeyUtils.entityId(Page.class, page.getId().longValue()), stringHashMapper.toHash(page));
@@ -108,9 +103,9 @@ public class PageDao extends RedisBaseDao<Page> {
 	public void delete(Long pageId) {
 		final Page page = findByKey(pageId);
 		if (page != null) {
-			template.execute(new JedisActionNoResult() {
+			super.jedisExecutor.execute(new JedisCallBackNoResult() {
 				@Override
-				public void action(Jedis jedis) {
+				public void execute(Jedis jedis) {
 					Transaction t = jedis.multi();
 					delete(page, t);
 					t.exec();
@@ -125,7 +120,7 @@ public class PageDao extends RedisBaseDao<Page> {
 		t.del(KeyUtils.entityId(Page.class, page.getId().longValue()));
 	}
 
-	public static String keyForSitePages(Long siteId) {
+	protected static String keyForSitePages(Long siteId) {
 		return "site:" + siteId + ":pages";
 	}
 }

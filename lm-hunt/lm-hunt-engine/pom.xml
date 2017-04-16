@@ -8,6 +8,12 @@
 	<artifactId>lm-hunt-engine</artifactId>
 	
     <dependencies>
+		<dependency>
+			<groupId>cn.blmdz.common</groupId>
+			<artifactId>qxx-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
         <dependency>
             <groupId>cn.blmdz.hunt</groupId>
             <artifactId>lm-hunt-engine-api</artifactId>

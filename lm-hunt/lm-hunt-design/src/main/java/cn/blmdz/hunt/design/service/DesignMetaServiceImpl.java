@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.hunt.design.container.DPageRender;
 import cn.blmdz.hunt.design.medol.DesignMetaInfo;
 import cn.blmdz.hunt.engine.ThreadVars;
@@ -22,10 +22,9 @@ import redis.clients.jedis.Jedis;
 
 @Service
 public class DesignMetaServiceImpl implements DesignMetaService {
-	
+
 	@Autowired
-	@Qualifier("pampasJedisTemplate")
-	private JedisTemplate jedisTemplate;
+	private JedisExecutor jedisExecutor;
 	@Autowired
 	private DPageRender dPageRender;
 	@Autowired
@@ -36,9 +35,9 @@ public class DesignMetaServiceImpl implements DesignMetaService {
 	@Override
 	public DesignMetaInfo getMetaInfo() {
 		final DesignMetaInfo metaInfo = new DesignMetaInfo();
-		jedisTemplate.execute(new JedisTemplate.JedisActionNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
-			public void action(Jedis jedis) {
+			public void execute(Jedis jedis) {
 				metaInfo.setRedisUrl(jedis.getClient().getHost() + ":" + jedis.getClient().getPort());
 			}
 		});

@@ -3,15 +3,14 @@ package cn.blmdz.hunt.design.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.util.JedisTemplate;
-import cn.blmdz.hunt.common.util.JedisTemplate.JedisActionNoResult;
+import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.hunt.design.dao.PageDao;
 import cn.blmdz.hunt.design.dao.PagePartDao;
 import cn.blmdz.hunt.design.dao.SiteDao;
@@ -31,8 +30,7 @@ public class PageServiceImpl implements PageService {
 	@Autowired
 	private PagePartDao pagePartDao;
 	@Autowired
-	@Qualifier("pampasJedisTemplate")
-	private JedisTemplate jedisTemplate;
+	private JedisExecutor jedisExecutor;
 
 	@Override
 	public Page find(Long pageId) {
@@ -43,8 +41,7 @@ public class PageServiceImpl implements PageService {
 	@Override
 	public Page find(Long siteId, String path) {
 		Preconditions.checkNotNull(siteId, "siteId should not be null");
-		Preconditions.checkArgument(!Strings.isNullOrEmpty(path),
-				"path should not be empty");
+		Preconditions.checkArgument(!Strings.isNullOrEmpty(path), "path should not be empty");
 		return pageDao.findByPath(siteId, path);
 	}
 
@@ -116,9 +113,9 @@ public class PageServiceImpl implements PageService {
 		if (page != null) {
 			if (!page.isImmutable()) {
 				final Site site = siteDao.findById(page.getSiteId());
-				jedisTemplate.execute(new JedisActionNoResult() {
+				jedisExecutor.execute(new JedisCallBackNoResult() {
 					@Override
-					public void action(Jedis jedis) {
+					public void execute(Jedis jedis) {
 						Transaction t = jedis.multi();
 						pageDao.delete(page, t);
 						pagePartDao.delete(page.getApp(), pagePartKeyForPage(page.getId()));

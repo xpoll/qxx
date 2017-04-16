@@ -2,7 +2,6 @@ package cn.blmdz.boot.hunt.autoconfigure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
@@ -14,9 +13,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 
-import com.google.common.base.MoreObjects;
-
-import cn.blmdz.hunt.common.util.JedisTemplate;
 import cn.blmdz.hunt.design.DesignContext;
 import cn.blmdz.hunt.engine.PageRender;
 import cn.blmdz.hunt.engine.Setting;
@@ -24,8 +20,6 @@ import cn.blmdz.hunt.engine.SettingHelper;
 import cn.blmdz.hunt.engine.debug.ProfiledAspect;
 import cn.blmdz.hunt.engine.mapping.DubboExecutor;
 import cn.blmdz.hunt.engine.utils.DubboHelper;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
 @EnableConfigurationProperties(PampasProperties.class)
@@ -40,8 +34,8 @@ public class PampasAutoConfiguration {
 	
 	@Autowired
 	private PampasProperties properties;
-	@Autowired
-	private ApplicationContext applicationContext;
+//	@Autowired
+//	private ApplicationContext applicationContext;
 
 	@Bean
 	public Setting setting() {
@@ -55,30 +49,30 @@ public class PampasAutoConfiguration {
 		return setting;
 	}
 
-	@Bean(name = { "pampasJedisTemplate" })
-	@ConditionalOnProperty(prefix = "pampas.redis", name = { "jedisPool" })
-	public JedisTemplate jedisTemplate1() {
-		JedisPool jedisPool = applicationContext.getBean(properties.getRedis().getJedisPool(), JedisPool.class);
-		return new JedisTemplate(jedisPool);
-	}
-
-	@Bean(name = { "pampasJedisTemplate" })
-	@ConditionalOnMissingBean(name = { "pampasJedisTemplate" })
-	@ConditionalOnProperty(prefix = "pampas.redis", name = { "host" })
-	public JedisTemplate jedisTemplate2() {
-		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-		jedisPoolConfig.setMaxTotal(20);
-		jedisPoolConfig.setMaxIdle(2);
-		jedisPoolConfig.setMaxWaitMillis(10000L);
-		jedisPoolConfig.setTestOnBorrow(true);
-		PampasProperties.RedisProperties redisProperties = properties.getRedis();
-		JedisPool jedisPool = new JedisPool(jedisPoolConfig, redisProperties.getHost(),
-				MoreObjects.firstNonNull(redisProperties.getPort(), Integer.valueOf(6379)).intValue(),
-				MoreObjects.firstNonNull(redisProperties.getTimeout(), Integer.valueOf(2000)).intValue(),
-				redisProperties.getPassword(),
-				MoreObjects.firstNonNull(redisProperties.getDatabase(), Integer.valueOf(0)).intValue());
-		return new JedisTemplate(jedisPool);
-	}
+//	@Bean(name = { "pampasJedisTemplate" })
+//	@ConditionalOnProperty(prefix = "pampas.redis", name = { "jedisPool" })
+//	public JedisTemplate jedisTemplate1() {
+//		JedisPool jedisPool = applicationContext.getBean(properties.getRedis().getJedisPool(), JedisPool.class);
+//		return new JedisTemplate(jedisPool);
+//	}
+//
+//	@Bean(name = { "pampasJedisTemplate" })
+//	@ConditionalOnMissingBean(name = { "pampasJedisTemplate" })
+//	@ConditionalOnProperty(prefix = "pampas.redis", name = { "host" })
+//	public JedisTemplate jedisTemplate2() {
+//		JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+//		jedisPoolConfig.setMaxTotal(20);
+//		jedisPoolConfig.setMaxIdle(2);
+//		jedisPoolConfig.setMaxWaitMillis(10000L);
+//		jedisPoolConfig.setTestOnBorrow(true);
+//		PampasProperties.RedisProperties redisProperties = properties.getRedis();
+//		JedisPool jedisPool = new JedisPool(jedisPoolConfig, redisProperties.getHost(),
+//				MoreObjects.firstNonNull(redisProperties.getPort(), Integer.valueOf(6379)).intValue(),
+//				MoreObjects.firstNonNull(redisProperties.getTimeout(), Integer.valueOf(2000)).intValue(),
+//				redisProperties.getPassword(),
+//				MoreObjects.firstNonNull(redisProperties.getDatabase(), Integer.valueOf(0)).intValue());
+//		return new JedisTemplate(jedisPool);
+//	}
 
 	@Configuration
 	@ConditionalOnProperty(prefix = "pampas", name = { "devMode" })

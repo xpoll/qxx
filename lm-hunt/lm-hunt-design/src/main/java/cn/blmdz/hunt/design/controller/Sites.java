@@ -19,7 +19,6 @@ import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
 import cn.blmdz.hunt.common.exception.JsonResponseException;
-import cn.blmdz.hunt.common.util.UserUtil;
 import cn.blmdz.hunt.design.controller.ext.SitesHook;
 import cn.blmdz.hunt.design.medol.Page;
 import cn.blmdz.hunt.design.medol.Site;

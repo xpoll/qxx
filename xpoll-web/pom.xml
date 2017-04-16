@@ -1,103 +1,130 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.blmdz</groupId>
 	<artifactId>xpoll-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.3.RELEASE</version>
+		<version>1.5.2.RELEASE</version>
 	</parent>
-	
+
 	<properties>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-		<lombok.version>1.16.10</lombok.version>
-		<elasticsearch.version>2.4.4</elasticsearch.version>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-	
+
 	<dependencies>
+		<!-- ###################### my ###################### -->
 		<!-- 框架 -->
 		<dependency>
 			<groupId>cn.blmdz.hunt</groupId>
 			<artifactId>lm-hunt-boot</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+			<groupId>cn.blmdz.aide</groupId>
+			<artifactId>qxx-aide-redis</artifactId>
+		</dependency>
+		<!-- session -->
+		<dependency>
+			<groupId>cn.blmdz.aide</groupId>
+			<artifactId>qxx-aide-session</artifactId>
 		</dependency>
 		<!-- file -->
 		<dependency>
 			<groupId>cn.blmdz.aide</groupId>
-			<artifactId>lm-aide-file</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>qxx-aide-file</artifactId>
 		</dependency>
-	
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+
+		<!-- ###################### other ###################### -->
 		<!-- spring-boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-		</dependency>
-		<!-- spring健康 -->
+		<!-- spring-actuator -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<!-- handlebars -->
 		<dependency>
-		    <groupId>com.github.jknack</groupId>
-		    <artifactId>handlebars</artifactId>
-		    <version>4.0.3</version>
+			<groupId>com.github.jknack</groupId>
+			<artifactId>handlebars</artifactId>
 		</dependency>
 		<!-- 验证码 -->
 		<dependency>
-		    <groupId>com.github.bingoohuang</groupId>
-		    <artifactId>patchca</artifactId>
-		    <version>0.0.1</version>
-		</dependency>
-		<!-- lombok -->
-		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>${lombok.version}</version>
+			<groupId>com.github.bingoohuang</groupId>
+			<artifactId>patchca</artifactId>
 		</dependency>
 		<!-- JSON -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-        </dependency>
-		<!-- junit -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+		</dependency>
+
+		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- test -->
 		<dependency>
-		    <groupId>javax.mail</groupId>
-		    <artifactId>mail</artifactId>
-		    <version>1.4.7</version>
-		    <scope>test</scope>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.elasticsearch.plugin</groupId>
-		    <artifactId>delete-by-query</artifactId>
-		    <version>${elasticsearch.version}</version>
-		    <scope>test</scope>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>org.elasticsearch</groupId>
-		    <artifactId>elasticsearch</artifactId>
-		    <version>${elasticsearch.version}</version><!--$NO-MVN-MAN-VER$-->
-		    <scope>test</scope>
+			<groupId>org.elasticsearch.plugin</groupId>
+			<artifactId>delete-by-query</artifactId>
+			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>com.github.jknack</groupId>
+			<artifactId>handlebars-proto</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		 -->
 	</dependencies>
-	
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>cn.blmdz.pom</groupId>
+				<artifactId>qxx-pom</artifactId>
+				<version>1.0.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -105,5 +132,5 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-	 </build>
+	</build>
 </project>

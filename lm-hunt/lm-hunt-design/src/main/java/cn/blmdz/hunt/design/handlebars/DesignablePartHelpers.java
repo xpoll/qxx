@@ -1,7 +1,6 @@
 package cn.blmdz.hunt.design.handlebars;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -17,9 +16,6 @@ import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
-import cn.blmdz.hunt.common.model.BaseUser;
-import cn.blmdz.hunt.common.util.Splitters;
-import cn.blmdz.hunt.common.util.UserUtil;
 import cn.blmdz.hunt.design.service.PagePartService;
 import cn.blmdz.hunt.design.util.PagePartPath;
 import cn.blmdz.hunt.engine.RenderConstants;
