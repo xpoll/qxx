@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import org.springframework.util.StringUtils;
 
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.util.Splitters;
 
 public class LocaleTag {
 	private String language;

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.blmdz.session.util.SessionIdGenerator;
-import cn.blmdz.session.util.WebUtil;
+import cn.blmdz.common.util.IdGeneratorUtil;
+import cn.blmdz.common.util.WebUtil;
 import lombok.Setter;
 
 public class QxxHttpServletRequest extends HttpServletRequestWrapper {
@@ -81,7 +81,7 @@ public class QxxHttpServletRequest extends HttpServletRequestWrapper {
     
     private QxxSession buildSession(boolean create) {
     	if (create) {
-    		blmdzSession = buildSession(redisPrefix, SessionIdGenerator.generatorId(request), true);
+    		blmdzSession = buildSession(redisPrefix, IdGeneratorUtil.generatorId(request), true);
     		log.debug("Build new session[{}].", blmdzSession.getId());
     		return blmdzSession;
     	}

@@ -15,7 +15,7 @@ import org.springframework.util.CollectionUtils;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.util.Splitters;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.config.ConfigManager;
 import cn.blmdz.hunt.engine.config.model.HttpMethod;

@@ -14,7 +14,7 @@ import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.session.QxxSessionFilter;
 import cn.blmdz.session.QxxSessionManager;
 import cn.blmdz.session.properties.SessionProperties;
-import cn.blmdz.session.redis.SessionRedisSource;
+import cn.blmdz.session.service.SessionRedisSource;
 
 @Configuration
 @ConditionalOnBean(JedisExecutor.class)
@@ -57,7 +57,6 @@ public class SessionAutoConfiguration {
 	}
 	@Bean
 	public QxxSessionManager sessionManager(JedisExecutor jedisExecutor) {
-		
-		return QxxSessionManager.newInstance(properties, new SessionRedisSource(jedisExecutor, properties));
+		return QxxSessionManager.newInstance(new SessionRedisSource(jedisExecutor, properties));
 	}
 }

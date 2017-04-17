@@ -9,10 +9,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.model.BaseUser;
-import cn.blmdz.hunt.common.util.UserUtil;
+import cn.blmdz.common.model.BaseUser;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.engine.ThreadVars;
-import cn.blmdz.hunt.engine.common.WebUtil;
+import cn.blmdz.common.util.WebUtil;
 import cn.blmdz.hunt.engine.utils.LoginInfo;
 import cn.blmdz.hunt.webc.extention.UserExt;
 

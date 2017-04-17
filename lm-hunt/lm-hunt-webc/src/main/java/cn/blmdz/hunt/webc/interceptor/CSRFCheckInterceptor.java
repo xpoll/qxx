@@ -13,7 +13,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.google.common.collect.Iterables;
 
-import cn.blmdz.hunt.common.exception.JsonResponseException;
+import cn.blmdz.common.exception.JsonResponseException;
 import cn.blmdz.hunt.engine.security.CSRFCheck;
 import cn.blmdz.hunt.engine.security.CSRFHelper;
 import cn.blmdz.hunt.engine.security.CSRFUtil;

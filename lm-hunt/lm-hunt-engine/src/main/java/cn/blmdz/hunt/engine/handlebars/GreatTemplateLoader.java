@@ -10,7 +10,7 @@ import com.github.jknack.handlebars.io.AbstractTemplateLoader;
 import com.github.jknack.handlebars.io.StringTemplateSource;
 import com.github.jknack.handlebars.io.TemplateSource;
 
-import cn.blmdz.hunt.common.util.MapBuilder;
+import cn.blmdz.common.util.MapBuilder;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.utils.FileLoader;
 import cn.blmdz.hunt.engine.utils.FileLoader.Resp;

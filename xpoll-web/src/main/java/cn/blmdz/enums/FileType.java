@@ -1,6 +1,6 @@
 package cn.blmdz.enums;
 
-import cn.blmdz.hunt.common.util.Arguments;
+import cn.blmdz.common.util.Arguments;
 
 public enum FileType {
    RAR(1, "压缩包"),

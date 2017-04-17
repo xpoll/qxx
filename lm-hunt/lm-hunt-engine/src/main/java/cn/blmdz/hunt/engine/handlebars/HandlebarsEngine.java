@@ -32,8 +32,8 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import cn.blmdz.hunt.common.exception.UserNotLoginException;
-import cn.blmdz.hunt.common.util.UserUtil;
+import cn.blmdz.common.exception.UserNotLoginException;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.engine.Setting;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.mapping.Invoker;

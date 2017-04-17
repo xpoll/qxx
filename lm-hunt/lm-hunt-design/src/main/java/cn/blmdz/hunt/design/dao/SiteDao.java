@@ -12,7 +12,7 @@ import com.google.common.base.Strings;
 import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
-import cn.blmdz.hunt.common.util.KeyUtils;
+import cn.blmdz.common.util.KeyUtils;
 import cn.blmdz.hunt.design.medol.Site;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
@@ -59,7 +59,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 		String siteId = super.jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
 			public String execute(Jedis jedis) {
-				return jedis.get(SiteDao.keyByDomain(domain));
+				return jedis.get(keyByDomain(domain));
 			}
 		});
 		return !Strings.isNullOrEmpty(siteId) ? this.findById(Long.valueOf(Long
@@ -70,7 +70,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 		String siteId =  super.jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
 			public String execute(Jedis jedis) {
-				return jedis.get(SiteDao.keyBySubDomain(subdomain));
+				return jedis.get(keyBySubDomain(subdomain));
 			}
 		});
 		return !Strings.isNullOrEmpty(siteId) ? this.findById(Long.valueOf(Long
@@ -92,8 +92,8 @@ public class SiteDao extends RedisBaseDao<Site> {
 				if (!Strings.isNullOrEmpty(site.getDomain())
 						&& !Objects.equal(site.getDomain(), exist.getDomain())) {
 					
-					t.del(SiteDao.keyByDomain(exist.getDomain()));
-					t.set(SiteDao.keyByDomain(site.getDomain()), id.toString());
+					t.del(keyByDomain(exist.getDomain()));
+					t.set(keyByDomain(site.getDomain()), id.toString());
 				}
 
 				t.exec();
@@ -110,7 +110,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 		Set<String> ids =  super.jedisExecutor.execute(new JedisCallBack<Set<String>>() {
 			@Override
 			public Set<String> execute(Jedis jedis) {
-				return jedis.smembers(SiteDao.keyUserSites(Long.valueOf(userId)));
+				return jedis.smembers(keyUserSites(Long.valueOf(userId)));
 			}
 		});
 		return findByIds(ids);
@@ -120,7 +120,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 		Set<String> ids =  super.jedisExecutor.execute(new JedisCallBack<Set<String>>() {
 			@Override
 			public Set<String> execute(Jedis jedis) {
-				return jedis.smembers(SiteDao.keySites());
+				return jedis.smembers(keySites());
 			}
 		});
 		return findByIds(ids);

@@ -27,11 +27,11 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.net.MediaType;
 
-import cn.blmdz.hunt.common.exception.JsonResponseException;
-import cn.blmdz.hunt.common.exception.NotFound404Exception;
-import cn.blmdz.hunt.common.exception.ServiceException;
-import cn.blmdz.hunt.common.exception.UnAuthorize401Exception;
-import cn.blmdz.hunt.common.exception.UserNotLoginException;
+import cn.blmdz.common.exception.JsonResponseException;
+import cn.blmdz.common.exception.NotFound404Exception;
+import cn.blmdz.common.exception.ServiceException;
+import cn.blmdz.common.exception.UnAuthorize401Exception;
+import cn.blmdz.common.exception.UserNotLoginException;
 import cn.blmdz.hunt.engine.MessageSources;
 import lombok.AllArgsConstructor;
 import lombok.Data;

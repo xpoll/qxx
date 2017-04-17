@@ -2,7 +2,7 @@ package cn.blmdz.hunt.engine.utils;
 
 import java.util.Map;
 
-import cn.blmdz.hunt.common.util.MapBuilder;
+import cn.blmdz.common.util.MapBuilder;
 
 public class MimeTypes {
 	private static final String DEFAULT_TYPE = "application/octet-stream";

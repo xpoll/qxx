@@ -19,10 +19,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.exception.JsonResponseException;
-import cn.blmdz.hunt.common.exception.UnAuthorize401Exception;
-import cn.blmdz.hunt.common.model.BaseUser;
-import cn.blmdz.hunt.common.util.UserUtil;
+import cn.blmdz.common.exception.JsonResponseException;
+import cn.blmdz.common.exception.UnAuthorize401Exception;
+import cn.blmdz.common.model.BaseUser;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.config.model.Auths;
 import cn.blmdz.hunt.engine.config.model.FrontConfig;
@@ -73,8 +73,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					}
 
 					if (!CollectionUtils.isEmpty(protectedAuth.getTypes())
-							&& typeMatch(protectedAuth.getTypes(),
-									user.getTypeName())) {
+							&& typeMatch(protectedAuth.getTypes(), user.getType())) {
 						return true;
 					}
 

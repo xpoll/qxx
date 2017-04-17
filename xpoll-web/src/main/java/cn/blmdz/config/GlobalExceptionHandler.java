@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.blmdz.common.model.Response;
 import cn.blmdz.exception.GlobalException;
-import cn.blmdz.hunt.common.model.Response;
 import lombok.extern.slf4j.Slf4j;
 
 /**

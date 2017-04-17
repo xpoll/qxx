@@ -2,24 +2,10 @@ package cn.blmdz.session;
 
 import java.util.Map;
 
-import cn.blmdz.session.properties.SessionProperties;
 import cn.blmdz.session.service.SessionDataSource;
-import lombok.Getter;
 
 public class QxxSessionManager {
 	private static SessionDataSource dataSource;
-	@Getter
-	private static SessionProperties properties;
-	
-	private static final class SingletonHolder {
-		private static final QxxSessionManager INSTANCE = init();
-		private static QxxSessionManager init() {
-			return new QxxSessionManager();
-		}
-		public static QxxSessionManager getInstance() {
-			return INSTANCE;
-		}
-	}
 	
 	public Map<String, Object> findSessionById(String prefix, String id) {
 		return dataSource.findSessionById(prefix, id);
@@ -40,8 +26,16 @@ public class QxxSessionManager {
 		dataSource.destroy();
 	}
 	
-	public static QxxSessionManager newInstance(SessionProperties properties, SessionDataSource sessionDataSource) {
-		QxxSessionManager.properties = properties;
+	private static final class SingletonHolder {
+		private static final QxxSessionManager INSTANCE = init();
+		private static QxxSessionManager init() {
+			return new QxxSessionManager();
+		}
+		public static QxxSessionManager getInstance() {
+			return INSTANCE;
+		}
+	}
+	public static QxxSessionManager newInstance(SessionDataSource sessionDataSource) {
 		QxxSessionManager.dataSource = sessionDataSource;
 		return SingletonHolder.getInstance();
 	}

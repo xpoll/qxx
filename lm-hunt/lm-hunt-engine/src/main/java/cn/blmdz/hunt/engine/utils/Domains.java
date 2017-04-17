@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.util.Joiners;
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.util.Joiners;
+import cn.blmdz.common.util.Splitters;
 
 public class Domains {
 	/**

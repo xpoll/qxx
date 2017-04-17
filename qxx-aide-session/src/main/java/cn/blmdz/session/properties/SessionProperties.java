@@ -9,7 +9,6 @@ import lombok.Data;
 @ConfigurationProperties(prefix="session")
 public class SessionProperties {
 	private String source;//储存源
-	private String serializeType = "json";//序列号类型
 	private String redisPrefix;//redis前缀
 	private int redisIndex = 0;
 	private String cookieName;

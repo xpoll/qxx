@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.common.base.Charsets;
 
-import cn.blmdz.hunt.common.util.JsonMapper;
+import cn.blmdz.common.util.JsonMapper;
 import lombok.Getter;
 import lombok.Setter;
 

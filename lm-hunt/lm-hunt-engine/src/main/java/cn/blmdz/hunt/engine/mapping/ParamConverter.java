@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.common.base.Defaults;
 import com.google.common.collect.Maps;
 
+import cn.blmdz.common.exception.UserNotLoginException;
+import cn.blmdz.common.model.BaseUser;
+import cn.blmdz.common.model.InnerCookie;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.client.ParamUtil;
-import cn.blmdz.hunt.common.exception.UserNotLoginException;
-import cn.blmdz.hunt.common.model.BaseUser;
-import cn.blmdz.hunt.common.model.InnerCookie;
-import cn.blmdz.hunt.common.util.UserUtil;
-import cn.blmdz.hunt.engine.common.WebUtil;
+import cn.blmdz.common.util.WebUtil;
 
 public class ParamConverter {
 	public static Object convertParam(String paramName, Class<?> paramClass, Map<String, Object> params,

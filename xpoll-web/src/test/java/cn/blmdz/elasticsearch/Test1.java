@@ -30,7 +30,7 @@ import org.elasticsearch.search.SearchHits;
 
 import com.google.common.collect.Lists;
 
-import cn.blmdz.hunt.common.util.JsonMapper;
+import cn.blmdz.common.util.JsonMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

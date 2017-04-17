@@ -12,7 +12,7 @@ import org.springframework.util.CollectionUtils;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.exception.NotFound404Exception;
+import cn.blmdz.common.exception.NotFound404Exception;
 import cn.blmdz.hunt.design.medol.Page;
 import cn.blmdz.hunt.design.medol.Page.Type;
 import cn.blmdz.hunt.design.medol.Site;

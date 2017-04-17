@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import cn.blmdz.hunt.common.exception.NotFound404Exception;
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.exception.NotFound404Exception;
+import cn.blmdz.common.util.Splitters;
 import cn.blmdz.hunt.engine.RequestAttributes;
 import cn.blmdz.hunt.engine.SettingHelper;
 import cn.blmdz.hunt.engine.SettingHelper.AppResult;

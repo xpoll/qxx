@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Iterables;
 
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.util.Splitters;
 import cn.blmdz.hunt.engine.Setting;
 import cn.blmdz.hunt.engine.utils.FileLoader.Resp;
 import cn.blmdz.hunt.engine.utils.FileLoaderHelper;

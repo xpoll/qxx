@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.base.Objects;
 
-import cn.blmdz.hunt.common.exception.JsonResponseException;
-import cn.blmdz.hunt.common.util.JsonMapper;
+import cn.blmdz.common.exception.JsonResponseException;
+import cn.blmdz.common.util.JsonMapper;
 import cn.blmdz.hunt.design.controller.ext.PagesHook;
 import cn.blmdz.hunt.design.medol.Page;
 import cn.blmdz.hunt.design.medol.Page.Type;

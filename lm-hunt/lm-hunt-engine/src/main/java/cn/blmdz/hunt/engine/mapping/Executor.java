@@ -4,8 +4,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.blmdz.hunt.common.exception.ServiceException;
-import cn.blmdz.hunt.common.model.Response;
+import cn.blmdz.common.exception.ServiceException;
+import cn.blmdz.common.model.Response;
 import cn.blmdz.hunt.engine.MessageSources;
 import cn.blmdz.hunt.engine.config.model.Service;
 import lombok.extern.slf4j.Slf4j;

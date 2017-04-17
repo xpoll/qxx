@@ -13,7 +13,7 @@ import com.google.common.collect.Lists;
 import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
-import cn.blmdz.hunt.common.util.KeyUtils;
+import cn.blmdz.common.util.KeyUtils;
 import cn.blmdz.hunt.design.medol.Page;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;

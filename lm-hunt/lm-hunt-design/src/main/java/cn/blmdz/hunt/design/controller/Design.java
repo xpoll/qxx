@@ -22,7 +22,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.common.net.MediaType;
 
-import cn.blmdz.hunt.common.exception.NotFound404Exception;
+import cn.blmdz.common.exception.NotFound404Exception;
 import cn.blmdz.hunt.design.container.DPageRender;
 import cn.blmdz.hunt.design.controller.ext.DesignHook;
 import cn.blmdz.hunt.design.medol.Page;

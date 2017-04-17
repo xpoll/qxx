@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JavaType;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.exception.JsonResponseException;
-import cn.blmdz.hunt.common.util.JsonMapper;
+import cn.blmdz.common.exception.JsonResponseException;
+import cn.blmdz.common.util.JsonMapper;
 import cn.blmdz.hunt.design.controller.ext.PagePartsHook;
 import cn.blmdz.hunt.design.service.PagePartService;
 

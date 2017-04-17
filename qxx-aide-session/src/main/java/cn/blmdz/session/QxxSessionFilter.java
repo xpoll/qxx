@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.blmdz.session.util.WebUtil;
+import cn.blmdz.common.util.WebUtil;
 import lombok.Setter;
 
 public class QxxSessionFilter implements Filter {

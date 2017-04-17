@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.util.UserUtil;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.engine.RenderConstants;
 import cn.blmdz.hunt.engine.request.AssetsHandler;
 import cn.blmdz.hunt.engine.request.MappingHandler;

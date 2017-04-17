@@ -25,7 +25,7 @@ public class RedisFileDao {
 			@Override
 			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
-				RedisFileDao.this.save(path, content, t);
+				save(path, content, t);
 				t.exec();
 			}
 		});
@@ -44,7 +44,7 @@ public class RedisFileDao {
 			@Override
 			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
-				RedisFileDao.this.delete(path, t);
+				delete(path, t);
 				t.exec();
 			}
 		});
@@ -60,7 +60,7 @@ public class RedisFileDao {
 		return this.jedisExecutor.execute(new JedisCallBack<Long>() {
 			@Override
 			public Long execute(Jedis jedis) {
-				String millisStr = jedis.hget(RedisFileDao.this.key(path), "updateAt");
+				String millisStr = jedis.hget(key(path), "updateAt");
 				return Strings.isNullOrEmpty(millisStr) ? null : Long.valueOf(millisStr);
 			}
 		});
@@ -71,7 +71,7 @@ public class RedisFileDao {
 		return this.jedisExecutor.execute(new JedisCallBack<String>() {
 			@Override
 			public String execute(Jedis jedis) {
-				return jedis.hget(RedisFileDao.this.key(path), "content");
+				return jedis.hget(key(path), "content");
 			}
 		});
 	}

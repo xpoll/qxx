@@ -2,7 +2,7 @@ package cn.blmdz.hunt.client;
 
 import java.io.Serializable;
 
-import cn.blmdz.hunt.common.model.InnerCookie;
+import cn.blmdz.common.model.InnerCookie;
 import lombok.Getter;
 import lombok.Setter;
 

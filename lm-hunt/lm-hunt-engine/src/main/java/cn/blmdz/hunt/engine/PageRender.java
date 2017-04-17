@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 
-import cn.blmdz.hunt.common.exception.NotFound404Exception;
+import cn.blmdz.common.exception.NotFound404Exception;
 import cn.blmdz.hunt.engine.handlebars.HandlebarsEngine;
 import lombok.extern.slf4j.Slf4j;
 

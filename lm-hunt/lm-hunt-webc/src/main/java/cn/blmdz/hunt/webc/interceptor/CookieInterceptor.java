@@ -13,9 +13,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Maps;
 
-import cn.blmdz.hunt.common.model.InnerCookie;
-import cn.blmdz.hunt.common.model.InnerCookie.FakeCookie;
-import cn.blmdz.hunt.common.util.UserUtil;
+import cn.blmdz.common.model.InnerCookie;
+import cn.blmdz.common.model.InnerCookie.FakeCookie;
+import cn.blmdz.common.util.UserUtil;
 import cn.blmdz.hunt.engine.utils.CookieBuilder;
 
 @Component("pampasCookieInterceptor")

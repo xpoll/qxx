@@ -11,8 +11,8 @@ import com.google.common.collect.Lists;
 
 import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
-import cn.blmdz.hunt.common.util.KeyUtils;
-import cn.blmdz.hunt.common.util.StringHashMapper;
+import cn.blmdz.common.serialize.StringHashMapper;
+import cn.blmdz.common.util.KeyUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
@@ -23,7 +23,7 @@ public abstract class RedisBaseDao<T> {
     protected final JedisExecutor jedisExecutor;
     protected final Class<T> entityClass;
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public RedisBaseDao(JedisExecutor jedisExecutor) {
         this.jedisExecutor = jedisExecutor;
         

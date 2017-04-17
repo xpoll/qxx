@@ -17,7 +17,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.html.HtmlEscapers;
 
-import cn.blmdz.hunt.common.util.JsonMapper;
+import cn.blmdz.common.util.JsonMapper;
 import cn.blmdz.hunt.engine.Setting;
 import cn.blmdz.hunt.engine.ThreadVars;
 import cn.blmdz.hunt.engine.config.ConfigManager;

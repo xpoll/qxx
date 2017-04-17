@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.blmdz.common.model.BaseUser;
 import cn.blmdz.hunt.client.AgentUserService;
-import cn.blmdz.hunt.common.model.BaseUser;
 import cn.blmdz.hunt.engine.utils.DubboHelper;
 
 @Component

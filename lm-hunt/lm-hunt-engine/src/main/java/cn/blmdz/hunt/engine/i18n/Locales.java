@@ -3,7 +3,7 @@ package cn.blmdz.hunt.engine.i18n;
 import java.util.List;
 import java.util.Locale;
 
-import cn.blmdz.hunt.common.util.Splitters;
+import cn.blmdz.common.util.Splitters;
 
 public class Locales {
 	public static LocaleTag bestMatch(Locale locale, List<LocaleTag> localeTags) {
