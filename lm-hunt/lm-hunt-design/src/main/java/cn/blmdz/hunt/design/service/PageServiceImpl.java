@@ -125,7 +125,7 @@ public class PageServiceImpl implements PageService {
 
 						t.exec();
 					}
-				});
+				}, 0);
 			}
 		}
 	}

@@ -10,6 +10,7 @@ import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
 import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.RedisBaseDao;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.common.util.KeyUtils;
@@ -22,7 +23,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 	
 	@Autowired
 	public SiteDao(JedisExecutor jedisExecutor) {
-		super(jedisExecutor);
+		super(jedisExecutor, 0);
 	}
 
 	public void create(Transaction t, Site site, boolean userOnly) {
@@ -61,7 +62,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 			public String execute(Jedis jedis) {
 				return jedis.get(keyByDomain(domain));
 			}
-		});
+		}, 0);
 		return !Strings.isNullOrEmpty(siteId) ? this.findById(Long.valueOf(Long
 				.parseLong(siteId))) : null;
 	}
@@ -72,7 +73,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 			public String execute(Jedis jedis) {
 				return jedis.get(keyBySubDomain(subdomain));
 			}
-		});
+		}, 0);
 		return !Strings.isNullOrEmpty(siteId) ? this.findById(Long.valueOf(Long
 				.parseLong(siteId))) : null;
 	}
@@ -98,7 +99,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 
 				t.exec();
 			}
-		});
+		}, 0);
 		return true;
 	}
 
@@ -112,7 +113,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 			public Set<String> execute(Jedis jedis) {
 				return jedis.smembers(keyUserSites(Long.valueOf(userId)));
 			}
-		});
+		}, 0);
 		return findByIds(ids);
 	}
 
@@ -122,7 +123,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 			public Set<String> execute(Jedis jedis) {
 				return jedis.smembers(keySites());
 			}
-		});
+		}, 0);
 		return findByIds(ids);
 	}
 

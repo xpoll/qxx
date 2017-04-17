@@ -1,18 +1,23 @@
 package cn.blmdz.common.redis;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
 import redis.clients.util.Pool;
 
+@AllArgsConstructor
 public class JedisExecutor {
+	
+	@Getter
     private Pool<Jedis> jedisPool;
 
-    public JedisExecutor(Pool<Jedis> jedisPool) {
-        this.jedisPool = jedisPool;
+    public interface JedisCallBack<T> {
+    	T execute(Jedis jedis);
     }
 
-    public <T> T execute(JedisCallBack<T> jedisCallBack) throws JedisException {
-        return this.execute(jedisCallBack, 0);
+    public interface JedisCallBackNoResult {
+        void execute(Jedis jedis);
     }
 
     public <T> T execute(JedisCallBack<T> jedisCallBack, int dbIndex) throws JedisException {
@@ -27,18 +32,6 @@ public class JedisExecutor {
 
     }
 
-    public Pool<Jedis> getJedisPool() {
-        return this.jedisPool;
-    }
-    
-    public interface JedisCallBack<T> {
-    	T execute(Jedis jedis);
-    }
-
-    public void execute(JedisCallBackNoResult jedisAction) throws JedisException {
-        this.execute(jedisAction, 0);
-    }
-
     public void execute(JedisCallBackNoResult jedisAction, int dbIndex) throws JedisException {
         Jedis jedis = null;
         try {
@@ -50,9 +43,4 @@ public class JedisExecutor {
         }
 
     }
-
-    public interface JedisCallBackNoResult {
-        void execute(Jedis jedis);
-    }
-
 }

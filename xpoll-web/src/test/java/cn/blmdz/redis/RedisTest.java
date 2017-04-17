@@ -70,9 +70,9 @@ public class RedisTest {
 		
 //		jedis.hgetAll("site:4:pages");
 //		System.out.println(jedis.exists("site:4:pages"));
-//		Student student = new Student(1L, "abc", date);
-//		jedis.hset("student:name", "abc", "1");
-//		jedis.hmset("student:1", hash.toHash(student));
+		Student student = new Student(1L, "abc", date);
+		jedis.hset("student:name", "abc", "1");
+		jedis.hmset("student:1", hash.toHash(student));
 		System.out.println(jedis.exists("student:name"));
 		System.out.println(jedis.hget("student:name", "abc"));
 		

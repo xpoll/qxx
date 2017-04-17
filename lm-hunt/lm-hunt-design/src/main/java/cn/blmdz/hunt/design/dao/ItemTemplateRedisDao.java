@@ -19,7 +19,7 @@ public class ItemTemplateRedisDao {
 			public void execute(Jedis jedis) {
 				jedis.set(keyBySpuId(spuId), htmlCode);
 			}
-		});
+		}, 0);
 	}
 
 	public String findBySpuId(final long spuId) {
@@ -28,7 +28,7 @@ public class ItemTemplateRedisDao {
 			public String execute(Jedis jedis) {
 				return jedis.get(keyBySpuId(spuId));
 			}
-		});
+		}, 0);
 	}
 
 	public void delete(final long spuId) {
@@ -37,7 +37,7 @@ public class ItemTemplateRedisDao {
 			public void execute(Jedis jedis) {
 				jedis.del(keyBySpuId(spuId));
 			}
-		});
+		}, 0);
 	}
 
 	private static String keyBySpuId(Long spuId) {

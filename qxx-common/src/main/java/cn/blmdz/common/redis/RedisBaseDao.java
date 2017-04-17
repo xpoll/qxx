@@ -1,4 +1,4 @@
-package cn.blmdz.hunt.design.dao;
+package cn.blmdz.common.redis;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
@@ -9,7 +9,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
 import cn.blmdz.common.serialize.StringHashMapper;
 import cn.blmdz.common.util.KeyUtils;
@@ -22,11 +21,12 @@ public abstract class RedisBaseDao<T> {
     public final StringHashMapper<T> stringHashMapper;
     protected final JedisExecutor jedisExecutor;
     protected final Class<T> entityClass;
+    protected final int index;
 
 	@SuppressWarnings("unchecked")
-	public RedisBaseDao(JedisExecutor jedisExecutor) {
+	public RedisBaseDao(JedisExecutor jedisExecutor, Integer index) {
         this.jedisExecutor = jedisExecutor;
-        
+        this.index = index == null ? 0 : index.intValue();
         entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         stringHashMapper = new StringHashMapper<T>(entityClass);
     }
@@ -55,7 +55,7 @@ public abstract class RedisBaseDao<T> {
                     p.sync();
                     return result;
                 }
-            });
+            }, index);
             List<T> entities = Lists.newArrayListWithCapacity(result.size());
             for (Response<Map<String, String>> t : result) {
             	entities.add(this.stringHashMapper.fromHash(t.get()));
@@ -70,7 +70,7 @@ public abstract class RedisBaseDao<T> {
             public Map<String, String> execute(Jedis jedis) {
                 return jedis.hgetAll(KeyUtils.entityId(entityClass,id));
             }
-        });
+        }, index);
         return stringHashMapper.fromHash(hash);
     }
 
@@ -80,7 +80,7 @@ public abstract class RedisBaseDao<T> {
             public Map<String, String> execute(Jedis jedis) {
                 return jedis.hgetAll(KeyUtils.entityId(entityClass, key));
             }
-        });
+        }, index);
         return this.stringHashMapper.fromHash(hash);
     }
 
@@ -90,6 +90,6 @@ public abstract class RedisBaseDao<T> {
             public Long execute(Jedis jedis) {
                 return jedis.incr(KeyUtils.entityCount(entityClass));
             }
-        });
+        }, index);
     }
 }

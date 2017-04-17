@@ -47,7 +47,7 @@ public class SiteServiceImpl implements SiteService {
 				siteDao.create(t, site, userOnly);
 				t.exec();
 			}
-		});
+		}, 0);
 		return siteId;
 	}
 
@@ -68,7 +68,7 @@ public class SiteServiceImpl implements SiteService {
 
 					t.exec();
 				}
-			});
+			}, 0);
 		}
 	}
 
@@ -126,7 +126,7 @@ public class SiteServiceImpl implements SiteService {
 				siteDao.cleanSiteIndex(siteId, t);
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	private void checkDomain(Site site) {

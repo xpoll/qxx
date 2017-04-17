@@ -19,7 +19,7 @@ public class ItemCustomRedisDao {
 			public void execute(Jedis jedis) {
 				jedis.set(keyByItemId(itemId), htmlCode);
 			}
-		});
+		}, 0);
 	}
 
 	public String findById(final long itemId) {
@@ -28,7 +28,7 @@ public class ItemCustomRedisDao {
 			public String execute(Jedis jedis) {
 				return jedis.get(keyByItemId(itemId));
 			}
-		});
+		}, 0);
 	}
 
 	public void delete(final long itemId) {
@@ -37,7 +37,7 @@ public class ItemCustomRedisDao {
 			public void execute(Jedis jedis) {
 				jedis.del(keyByItemId(itemId));
 			}
-		});
+		}, 0);
 	}
 
 	protected static String keyByItemId(Long itemId) {

@@ -40,7 +40,7 @@ public class DesignMetaServiceImpl implements DesignMetaService {
 			public void execute(Jedis jedis) {
 				metaInfo.setRedisUrl(jedis.getClient().getHost() + ":" + jedis.getClient().getPort());
 			}
-		});
+		}, 0);
 		List<AppWithConfigInfo> apps = configService.listAllAppWithConfigInfo();
 		List<String> appNames = Lists.newArrayList();
 

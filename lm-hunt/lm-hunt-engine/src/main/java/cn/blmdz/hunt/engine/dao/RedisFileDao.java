@@ -28,7 +28,7 @@ public class RedisFileDao {
 				save(path, content, t);
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	public void save(String path, String content, Transaction t) {
@@ -47,7 +47,7 @@ public class RedisFileDao {
 				delete(path, t);
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	public void delete(String path, Transaction t) {
@@ -63,7 +63,7 @@ public class RedisFileDao {
 				String millisStr = jedis.hget(key(path), "updateAt");
 				return Strings.isNullOrEmpty(millisStr) ? null : Long.valueOf(millisStr);
 			}
-		});
+		}, 0);
 	}
 
 	public String getContent(final String path) {
@@ -73,7 +73,7 @@ public class RedisFileDao {
 			public String execute(Jedis jedis) {
 				return jedis.hget(key(path), "content");
 			}
-		});
+		}, 0);
 	}
 
 	private String key(String path) {

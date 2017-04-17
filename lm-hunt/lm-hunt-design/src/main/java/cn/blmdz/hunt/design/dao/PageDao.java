@@ -11,6 +11,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import cn.blmdz.common.redis.JedisExecutor;
+import cn.blmdz.common.redis.RedisBaseDao;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBack;
 import cn.blmdz.common.redis.JedisExecutor.JedisCallBackNoResult;
 import cn.blmdz.common.util.KeyUtils;
@@ -22,7 +23,7 @@ import redis.clients.jedis.Transaction;
 public class PageDao extends RedisBaseDao<Page> {
 	@Autowired
 	public PageDao(JedisExecutor jedisExecutor) {
-		super(jedisExecutor);
+		super(jedisExecutor, 0);
 	}
 
 	public Page findById(Long id) {
@@ -41,7 +42,7 @@ public class PageDao extends RedisBaseDao<Page> {
 				String pageIdStr = jedis.hget(keyForSitePages(siteId), path);
 				return Strings.isNullOrEmpty(pageIdStr) ? null : Long.valueOf(pageIdStr);
 			}
-		});
+		}, 0);
 	}
 
 	public List<Page> listBySite(final Long siteId) {
@@ -59,7 +60,7 @@ public class PageDao extends RedisBaseDao<Page> {
 
 				return result;
 			}
-		});
+		}, 0);
 	}
 
 	public Long create(final Page page) {
@@ -70,7 +71,7 @@ public class PageDao extends RedisBaseDao<Page> {
 				create(page, t);
 				t.exec();
 			}
-		});
+		}, 0);
 		return page.getId();
 	}
 
@@ -97,7 +98,7 @@ public class PageDao extends RedisBaseDao<Page> {
 				t.hmset(KeyUtils.entityId(Page.class, page.getId().longValue()), stringHashMapper.toHash(page));
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	public void delete(Long pageId) {
@@ -110,7 +111,7 @@ public class PageDao extends RedisBaseDao<Page> {
 					delete(page, t);
 					t.exec();
 				}
-			});
+			}, 0);
 		}
 
 	}

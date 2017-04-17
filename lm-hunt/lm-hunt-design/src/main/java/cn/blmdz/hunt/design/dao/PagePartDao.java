@@ -22,7 +22,7 @@ public class PagePartDao {
 			public Boolean execute(Jedis jedis) {
 				return jedis.exists(key(app, key, isRelease));
 			}
-		}).booleanValue();
+		}, 0).booleanValue();
 	}
 
 	public Map<String, String> findByKey(final String app, final String key, final boolean isRelease) {
@@ -31,7 +31,7 @@ public class PagePartDao {
 			public Map<String, String> execute(Jedis jedis) {
 				return jedis.hgetAll(key(app, key, isRelease));
 			}
-		});
+		}, 0);
 	}
 
 	public void put(final String app, final String key, final Map<String, String> parts, final boolean isRelease) {
@@ -40,7 +40,7 @@ public class PagePartDao {
 			public void execute(Jedis jedis) {
 				jedis.hmset(key(app, key, isRelease), parts);
 			}
-		});
+		}, 0);
 	}
 
 	public void put(final String app, final String key, final String partKey, final String part, final boolean isRelease) {
@@ -49,7 +49,7 @@ public class PagePartDao {
 			public void execute(Jedis jedis) {
 				jedis.hset(key(app, key, isRelease), partKey, part);
 			}
-		});
+		}, 0);
 	}
 
 	public void replace(final String app, final String key, final Map<String, String> parts, final boolean isRelease) {
@@ -64,7 +64,7 @@ public class PagePartDao {
 
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	public void delete(final String app, final String key) {
@@ -75,7 +75,7 @@ public class PagePartDao {
 				delete(app, key, t);
 				t.exec();
 			}
-		});
+		}, 0);
 	}
 
 	protected void delete(String app, String key, Transaction t) {

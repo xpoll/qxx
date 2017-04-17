@@ -1,19 +1,60 @@
 package cn.blmdz.model;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
+/**
+ * 用户
+ * @author lm
+ */
 @Data
-public class QxxUser {
-	private Long id;
-	private Long present;
-	private String name;
-	private String auth;
-	private Integer type;
-	private String owner;
+public class QxxUser implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * id
+	 */
+	private Long id;
+	/**
+	 * 父id
+	 */
+	private Long present;
+	/**
+	 * 昵称
+	 */
+	private String name;
+	/**
+	 * 角色
+	 */
+	private String role;
+	/**
+	 * 账号类型
+	 */
+	private Integer type;
+	/**
+	 * 账号
+	 */
+	private String owner;
+	/**
+	 * 密码
+	 */
+	@JsonIgnore
+	private String pwd;
+
+	/**
+	 * <pre>
+	 *  1: 可用
+	 *  0: 未激活
+	 * -1: 删除
+	 * </pre>
+	 */
 	private Integer status;
+	private Long cid;
+	private Long uid;
 	private Date cdate;
 	private Date udate;
 }

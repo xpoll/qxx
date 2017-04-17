@@ -20,7 +20,7 @@ public class CSRFStore {
 			public Boolean execute(Jedis jedis) {
 				return Boolean.valueOf(jedis.srem(getKeyByUnid(unid), new String[] { token }).longValue() > 0L);
 			}
-		}).booleanValue();
+		}, 0).booleanValue();
 	}
 
 	public void addToken(final String unid, final String... tokens) {
@@ -30,7 +30,7 @@ public class CSRFStore {
 				jedis.sadd(getKeyByUnid(unid), tokens);
 				jedis.expire(getKeyByUnid(unid), EXPIRE_TIME);
 			}
-		});
+		}, 0);
 	}
 
 	private String getKeyByUnid(String unid) {
