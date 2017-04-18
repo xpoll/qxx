@@ -1,10 +1,11 @@
-package cn.blmdz.model;
+package cn.blmdz.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import cn.blmdz.enums.AuthType;
 import lombok.Data;
 
 /**
@@ -30,7 +31,7 @@ public class QxxUser implements Serializable {
 	/**
 	 * 角色
 	 */
-	private String role;
+	private AuthType role;
 	/**
 	 * 账号类型
 	 */

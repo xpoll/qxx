@@ -1,7 +1,6 @@
 package cn.blmdz.common.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public interface BaseUser extends Serializable {
 
@@ -9,7 +8,7 @@ public interface BaseUser extends Serializable {
 
     String getName();
 
-    String getType();
+//    String getType();
 
-    List<String> getRoles();
+//    List<String> getRoles();
 }

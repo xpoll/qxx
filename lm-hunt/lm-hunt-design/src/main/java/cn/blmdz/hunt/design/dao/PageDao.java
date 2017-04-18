@@ -26,13 +26,9 @@ public class PageDao extends RedisBaseDao<Page> {
 		super(jedisExecutor, 0);
 	}
 
-	public Page findById(Long id) {
-		return findByKey(id);
-	}
-
 	public Page findByPath(Long siteId, String path) {
 		Long pageId = findIdByPath(siteId, path);
-		return pageId == null ? null : findByKey(pageId);
+		return pageId == null ? null : findById(pageId);
 	}
 
 	public Long findIdByPath(final Long siteId, final String path) {
@@ -54,7 +50,7 @@ public class PageDao extends RedisBaseDao<Page> {
 
 				for (String pageIdStr : pageIds.values()) {
 					if (!Strings.isNullOrEmpty(pageIdStr)) {
-						result.add(findByKey(pageIdStr));
+						result.add(findById(pageIdStr));
 					}
 				}
 
@@ -64,7 +60,7 @@ public class PageDao extends RedisBaseDao<Page> {
 	}
 
 	public Long create(final Page page) {
-		super.jedisExecutor.execute(new JedisCallBackNoResult() {
+		jedisExecutor.execute(new JedisCallBackNoResult() {
 			@Override
 			public void execute(Jedis jedis) {
 				Transaction t = jedis.multi();
@@ -102,7 +98,7 @@ public class PageDao extends RedisBaseDao<Page> {
 	}
 
 	public void delete(Long pageId) {
-		final Page page = findByKey(pageId);
+		final Page page = findById(pageId);
 		if (page != null) {
 			super.jedisExecutor.execute(new JedisCallBackNoResult() {
 				@Override

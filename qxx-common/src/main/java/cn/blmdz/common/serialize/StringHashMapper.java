@@ -21,7 +21,7 @@ public class StringHashMapper<T> {
 
 	@SuppressWarnings("unchecked")
 	public T fromHash(Map<String, String> hash) {
-		return hash.isEmpty() ? null : (T) this.mapper.getMapper().convertValue(hash, this.userType);
+		return (hash == null || hash.isEmpty()) ? null : (T) this.mapper.getMapper().convertValue(hash, this.userType);
 	}
 
 	public Map<String, String> toHash(T object) {

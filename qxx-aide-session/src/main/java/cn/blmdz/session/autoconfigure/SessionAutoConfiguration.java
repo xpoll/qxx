@@ -20,9 +20,6 @@ import cn.blmdz.session.service.SessionRedisSource;
 @ConditionalOnBean(JedisExecutor.class)
 @EnableConfigurationProperties(SessionProperties.class)
 public class SessionAutoConfiguration {
-	public SessionAutoConfiguration(){
-		System.out.println("jlsdjflajfslj");
-	}
 	
 	private Logger log = LoggerFactory.getLogger(SessionAutoConfiguration.class);
 	

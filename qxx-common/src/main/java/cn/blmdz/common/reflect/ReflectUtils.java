@@ -1,4 +1,4 @@
-package cn.blmdz.tt;
+package cn.blmdz.common.reflect;
 
 
 import java.lang.reflect.ParameterizedType;

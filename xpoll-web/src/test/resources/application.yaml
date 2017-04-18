@@ -1,0 +1,42 @@
+logging:
+  file: /home/xpoll/log/xpoll-web.log
+  level.*: INFO
+  level.cn.blmdz: DEBUG
+server:
+  context-path: /
+  port: 8082
+
+pampas:
+  rootPath: /home/xpoll
+  apps:
+    - key: PC
+      assetsHome: feebas
+  mvc:
+    ignoreInterceptors:
+      - Login
+      - Auth
+    customInterceptors:
+      #- loginInterceptor
+      #- authInterceptor
+  design:
+    enable: true
+  locale: zh_CN
+  devMode: true
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+oos:
+  endpoint: http://oss-cn-shanghai.aliyuncs.com
+  accessKeyId: LTAIOucdAfA5jDC1
+  accessKeySecret: 3Cx6UXWh1bb8wnYK2D1hti7jYhYHeX
+  bucketName: xpoll
+session:
+  cookie-domain: 127.0.0.1
+  cookie-context-path: /
+  cookie-name: qxx
+  cookie-max-age: 1800
+  source: redis
+  serialize-type: json
+  redis-index: 1
+  redis-prefix: qxxsession

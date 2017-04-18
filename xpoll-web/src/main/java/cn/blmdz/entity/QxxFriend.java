@@ -1,4 +1,4 @@
-package cn.blmdz.model;
+package cn.blmdz.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,7 +15,7 @@ import lombok.Data;
  * @author lm
  */
 @Data
-public class Friend implements Serializable {
+public class QxxFriend implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

@@ -52,8 +52,8 @@ public class SiteDao extends RedisBaseDao<Site> {
 	}
 
 	public Site findById(Long id) {
-		Site site = findByKey(id);
-		return site.getId() != null ? site : null;
+		Site site = super.findById(id);
+		return site == null ? null : site.getId() == null ? null : site;
 	}
 
 	public Site findByDomain(final String domain) {
@@ -114,7 +114,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 				return jedis.smembers(keyUserSites(Long.valueOf(userId)));
 			}
 		}, 0);
-		return findByIds(ids);
+		return findByKeys(ids);
 	}
 
 	public List<Site> listAll() {
@@ -124,7 +124,7 @@ public class SiteDao extends RedisBaseDao<Site> {
 				return jedis.smembers(keySites());
 			}
 		}, 0);
-		return findByIds(ids);
+		return findByKeys(ids);
 	}
 
 	protected static String keySites() {

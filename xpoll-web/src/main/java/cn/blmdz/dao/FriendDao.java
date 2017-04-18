@@ -5,16 +5,16 @@ import org.springframework.stereotype.Repository;
 
 import cn.blmdz.common.redis.JedisExecutor;
 import cn.blmdz.common.redis.RedisBaseDao;
-import cn.blmdz.model.Friend;
+import cn.blmdz.entity.QxxFriend;
 
 @Repository
-public class FriendDao extends RedisBaseDao<Friend> {
+public class FriendDao extends RedisBaseDao<QxxFriend> {
 
-	private final static int index = 1;
+	private final static int select = 1;
 	
 	@Autowired
 	public FriendDao(JedisExecutor jedisExecutor) {
-		super(jedisExecutor, index);
+		super(jedisExecutor, select);
 	}
 
 }
