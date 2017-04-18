@@ -1,4 +1,4 @@
-//package cn.blmdz.image;
+package cn.blmdz.controller;
 //
 //import static com.google.common.base.Preconditions.checkArgument;
 //
@@ -38,7 +38,7 @@
 //@Controller
 //@RequestMapping("/api/user/folder")
 //@Slf4j
-//public class Folders {
+//public class UserAlbums {
 //    @Autowired(required = false)
 //    private MessageSources messageSources;
 //

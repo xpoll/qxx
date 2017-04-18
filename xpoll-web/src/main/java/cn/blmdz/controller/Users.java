@@ -25,7 +25,7 @@ import cn.blmdz.util.UserMaker;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class Users {
 
 	@Autowired
 	private UserService userService;
