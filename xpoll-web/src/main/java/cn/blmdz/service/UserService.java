@@ -2,11 +2,37 @@ package cn.blmdz.service;
 
 import cn.blmdz.entity.QxxUser;
 
+/**
+ * 用户
+ * @author lm
+ */
 public interface UserService {
 	
+	/**
+	 * 登陆
+	 * @param owner
+	 * @param pwd
+	 * @return
+	 */
 	QxxUser login(String owner, String pwd);
 
-	QxxUser findByid(Long id);
+	/**
+	 * 根据ID查找
+	 * @param id
+	 * @return
+	 */
+	QxxUser findById(Long id);
 
-	boolean updatePwd(String old, String snew);
+	/**
+	 * 更改密码
+	 * @param old
+	 * @param snew
+	 */
+	void updatePwd(String old, String current);
+	
+	/**
+	 * 重置密码
+	 * @param current
+	 */
+	void resetPwd(String current);
 }

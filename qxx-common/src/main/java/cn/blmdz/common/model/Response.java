@@ -32,13 +32,13 @@ public class Response<T> implements Serializable {
     }
 
     public static <T> Response<T> ok(T data) {
-        Response<T> resp = new Response<>();
+        Response<T> resp = new Response<T>();
         resp.setResult(data);
         return resp;
     }
 
     public static <T> Response<T> fail(String error) {
-        Response<T> resp = new Response<>();
+        Response<T> resp = new Response<T>();
         resp.setError(error);
         return resp;
     }
