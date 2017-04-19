@@ -6,16 +6,17 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 好友
+ * 相册
  * 
  * <pre>
  *  只能自己创建和更新
  *  所以没有创建人和更新人
+ *  删除则直接删除
  * </pre>
  * @author lm
  */
 @Data
-public class QxxFriend implements Serializable {
+public class QxxAlbum implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -23,25 +24,18 @@ public class QxxFriend implements Serializable {
 	 */
 	private Long id;
 	/**
-	 * 目标ID
+	 * 名称
 	 */
-	private Long fid;
+	private String name;
 	/**
-	 * 好感度
+	 * 标图
 	 */
-	private Long favorability;
+	private String img;
 	/**
-	 * 互粉
+	 * 备注
 	 */
-	private boolean powder;
-	/**
-	 * 赞
-	 */
-	private Long praise;
-	/**
-	 * 开关(默认关-未定义)
-	 */
-	private boolean switchs;
+	private String desc;
+
 	/**
 	 * @see cn.blmdz.enums.StatusType
 	 */

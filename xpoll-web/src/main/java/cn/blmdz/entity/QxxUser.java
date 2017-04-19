@@ -3,8 +3,6 @@ package cn.blmdz.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import cn.blmdz.enums.AuthType;
 import lombok.Data;
 
@@ -30,10 +28,12 @@ public class QxxUser implements Serializable {
 	private String name;
 	/**
 	 * 角色
+	 * @see cn.blmdz.enums.AuthType
 	 */
 	private AuthType role;
 	/**
 	 * 账号类型
+	 * @see cn.blmdz.enums.OwnerType
 	 */
 	private Integer type;
 	/**
@@ -43,15 +43,10 @@ public class QxxUser implements Serializable {
 	/**
 	 * 密码
 	 */
-	@JsonIgnore
 	private String pwd;
 
 	/**
-	 * <pre>
-	 *  1: 可用
-	 *  0: 未激活
-	 * -1: 删除
-	 * </pre>
+	 * @see cn.blmdz.enums.StatusType
 	 */
 	private Integer status;
 	private Long cid;

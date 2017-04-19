@@ -32,12 +32,12 @@ import cn.blmdz.common.exception.JsonResponseException;
 import cn.blmdz.common.model.BaseUser;
 import cn.blmdz.common.model.Response;
 import cn.blmdz.common.util.UserUtil;
+import cn.blmdz.entity.QxxImage;
+import cn.blmdz.entity.QxxAlbum;
 import cn.blmdz.enums.FileType;
 import cn.blmdz.hunt.engine.MessageSources;
 import cn.blmdz.image.FileHelper;
 import cn.blmdz.image.UploadDto;
-import cn.blmdz.model.UserFile;
-import cn.blmdz.model.UserFolder;
 import cn.blmdz.util.FileUtil;
 //import io.terminus.common.exception.JsonResponseException;
 //import io.terminus.common.model.BaseUser;
@@ -138,7 +138,7 @@ public class UserFiles {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Boolean updateFile(@RequestBody UserFile userFile) {
+	public Boolean updateFile(@RequestBody QxxImage userFile) {
 		BaseUser user = UserUtil.getCurrentUser();
 		if (user == null) {
 			throw new JsonResponseException(401, messageSources.get("user.not.login"));
@@ -180,7 +180,7 @@ public class UserFiles {
 
 		checkAuthorize(user.getId(), id);
 
-		Response<Optional<UserFolder>> folderRes = userFolderService.findById(folderId);
+		Response<Optional<QxxAlbum>> folderRes = userFolderService.findById(folderId);
 		if (!folderRes.isSuccess() || !folderRes.getResult().isPresent()) {
 			log.error("Don't exist folder with id={}, error code={}", folderId, folderRes.getError());
 			throw new JsonResponseException(folderRes.getError());
@@ -214,13 +214,13 @@ public class UserFiles {
 			throw new JsonResponseException(401, messageSources.get("user.not.login"));
 		}
 
-		Response<UserFile> fileR = userFileService.deleteFile(id);
+		Response<QxxImage> fileR = userFileService.deleteFile(id);
 		if (!fileR.isSuccess()) {
 			log.warn("failed to find userImage by imageId {} when delete", id);
 			return;
 		}
 
-		UserFile userFile = fileR.getResult();
+		QxxImage userFile = fileR.getResult();
 		try {
 			imageServer.delete(userFile.getPath());
 		} catch (Exception e) {
@@ -228,24 +228,24 @@ public class UserFiles {
 		}
 	}
 
-	/**
-	 * 用户是否可更改文件
-	 * 
-	 * @param userId
-	 *            用户编号
-	 * @param folderId
-	 *            文件编号
-	 */
-	private void checkAuthorize(Long userId, Long folderId) {
-		Response<Optional<UserFile>> fileRes = userFileService.findById(folderId);
-		if (!fileRes.isSuccess() || !fileRes.getResult().isPresent()) {
-			log.error("Don't exist folder with id={}, error code={}", folderId, fileRes.getError());
-			throw new JsonResponseException(fileRes.getError());
-		}
-
-		if (Objects.equals(fileRes.getResult().get().getCreateBy(), userId)) {
-			log.error("Can't delete folder={}, by userId={}", folderId, userId);
-			throw new JsonResponseException("authorize.fail");
-		}
-	}
+//	/**
+//	 * 用户是否可更改文件
+//	 * 
+//	 * @param userId
+//	 *            用户编号
+//	 * @param folderId
+//	 *            文件编号
+//	 */
+//	private void checkAuthorize(Long userId, Long folderId) {
+//		Response<Optional<UserFile>> fileRes = userFileService.findById(folderId);
+//		if (!fileRes.isSuccess() || !fileRes.getResult().isPresent()) {
+//			log.error("Don't exist folder with id={}, error code={}", folderId, fileRes.getError());
+//			throw new JsonResponseException(fileRes.getError());
+//		}
+//
+//		if (Objects.equals(fileRes.getResult().get().getCreateBy(), userId)) {
+//			log.error("Can't delete folder={}, by userId={}", folderId, userId);
+//			throw new JsonResponseException("authorize.fail");
+//		}
+//	}
 }

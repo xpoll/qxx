@@ -21,9 +21,9 @@ import com.google.common.io.Files;
 import cn.blmdz.aide.file.ImageServer;
 import cn.blmdz.aide.file.util.FUtil;
 import cn.blmdz.common.util.JsonMapper;
+import cn.blmdz.entity.QxxImage;
 import cn.blmdz.enums.FileType;
 import cn.blmdz.hunt.engine.MessageSources;
-import cn.blmdz.model.UserFile;
 import cn.blmdz.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,7 +63,7 @@ public class FileHelper {
 	 */
 	public UploadDto upImage(Long userId, String realPath, String group, String fileRealName, Long folderId,
 			MultipartFile file) {
-		UserFile image = new UserFile();
+		QxxImage image = new QxxImage();
 		image.setGroup(group);
 		image.setFileType(FileType.IMAGE.value());
 		image.setCreateBy(userId);

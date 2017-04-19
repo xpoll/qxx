@@ -2,8 +2,8 @@ package cn.blmdz.image;
 
 import java.io.Serializable;
 
-import cn.blmdz.model.UserFile;
-import cn.blmdz.model.UserFolder;
+import cn.blmdz.entity.QxxImage;
+import cn.blmdz.entity.QxxAlbum;
 import lombok.Data;
 
 @Data
@@ -19,28 +19,28 @@ public class UploadDto implements Serializable {
     /**
      * 文件信息
      */
-    private UserFile userFile;
+    private QxxImage userFile;
 
     /**
      * 文件夹信息
      */
-    private UserFolder userFolder;
+    private QxxAlbum userFolder;
 
     private String error;
 
     public UploadDto(){}
 
-    public UploadDto(UserFile userFile){
+    public UploadDto(QxxImage userFile){
         this.type = Type.FILE.toNumber();
         this.userFile = userFile;
     }
 
-    public UploadDto(UserFolder userFolder){
+    public UploadDto(QxxAlbum userFolder){
         this.type = Type.FOLDER.toNumber();
         this.userFolder = userFolder;
     }
 
-    public UploadDto(UserFile userFile, String error){
+    public UploadDto(QxxImage userFile, String error){
         this.type = Type.FILE.toNumber();
         this.userFile = userFile;
         this.error = error;
