@@ -60,7 +60,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/user/files")
 @Slf4j
-public class UserFiles {
+public class UserImages {
 
 	@Autowired(required = false)
 	private UserFileService userFileService;
@@ -94,12 +94,9 @@ public class UserFiles {
 		Long albumId = Strings.isNullOrEmpty(request.getParameter("albumId")) ? 0 : Long.parseLong(request.getParameter("albumId"));
 		String group = request.getParameter("group");
 
-		String realPath = "";
 		if (albumId != 0) {
-			Response<FileRealPath> pathRes = userFolderService.folderPath(folderId);
-			realPath += pathRes.getResult().getRealPath();
+			// 文件夹是否存在 TODO
 		}
-
 		Iterator<String> fileNameItr = request.getFileNames();
 		List<UploadDto> result = Lists.newArrayList();
 		while (fileNameItr.hasNext()) {
@@ -122,7 +119,7 @@ public class UserFiles {
 
 			if (Objects.equals(FileUtil.fileType(fileRealName), FileType.IMAGE)) {
 				// 图片处理
-				result.add(fileHelper.upImage(userId, realPath, group, fileRealName, albumId, file));
+				result.add(fileHelper.upImage(userId, String.valueOf(albumId), group, fileRealName, albumId, file));
 			}
 		}
 

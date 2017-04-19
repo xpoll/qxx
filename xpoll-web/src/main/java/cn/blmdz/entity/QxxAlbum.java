@@ -31,6 +31,11 @@ public class QxxAlbum implements Serializable {
 	 * 标图
 	 */
 	private String img;
+	
+	/**
+	 * 是否可见
+	 */
+	private Boolean see;
 	/**
 	 * 备注
 	 */
