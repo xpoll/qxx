@@ -62,10 +62,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserImages {
 
-	@Autowired(required = false)
-	private UserFileService userFileService;
-	@Autowired(required = false)
-	private UserFolderService userFolderService;
 	@Autowired
 	private FileHelper fileHelper;
 	
@@ -73,8 +69,6 @@ public class UserImages {
 	private MessageSources messageSources;
 	@Autowired
 	private ImageServer imageServer;
-	@Autowired
-	private FileServer fileServer;
 	@Value("${image.max.size:2097152}")
 	private Long imageMaxSize; // 默认2M
 	@Value("${image.base.url}")
@@ -135,23 +129,14 @@ public class UserImages {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Boolean updateFile(@RequestBody QxxImage userFile) {
+	public void updateFile(@RequestBody QxxImage userFile) {
 		BaseUser user = UserUtil.getCurrentUser();
 		if (user == null) {
 			throw new JsonResponseException(401, messageSources.get("user.not.login"));
 		}
 
 		try {
-			checkArgument(notNull(userFile.getId()), "file.id.null");
-			checkAuthorize(user.getId(), userFile.getId());
-
-			Response<Boolean> result = userFileService.updateFile(userFile);
-			if (!result.isSuccess()) {
-				log.error("Update file failed, folder={}", userFile);
-				throw new JsonResponseException(result.getError());
-			}
-
-			return result.getResult();
+			//文件修改(改名)
 		} catch (IllegalArgumentException e) {
 			log.error("Check argument failed, userFile={}", userFile);
 			throw new JsonResponseException(e.getMessage());
@@ -169,32 +154,12 @@ public class UserImages {
 	 */
 	@RequestMapping(value = "/{id}/move", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Boolean moveFile(@PathVariable Long id, @RequestParam Long folderId) {
+	public void moveFile(@PathVariable Long id, @RequestParam Long folderId) {
 		BaseUser user = UserUtil.getCurrentUser();
 		if (user == null) {
 			throw new JsonResponseException(401, messageSources.get("user.not.login"));
 		}
-
-		checkAuthorize(user.getId(), id);
-
-		Response<Optional<QxxAlbum>> folderRes = userFolderService.findById(folderId);
-		if (!folderRes.isSuccess() || !folderRes.getResult().isPresent()) {
-			log.error("Don't exist folder with id={}, error code={}", folderId, folderRes.getError());
-			throw new JsonResponseException(folderRes.getError());
-		}
-
-		if (Objects.equals(folderRes.getResult().get().getCreateBy(), user.getId())) {
-			log.error("Can't delete folder={}, by userId={}", folderId, user.getId());
-			throw new JsonResponseException("authorize.fail");
-		}
-
-		Response<Boolean> result = userFileService.moveFile(id, folderId);
-		if (!result.isSuccess()) {
-			log.error("Failed move file, fileId={}, folderId={}", id, folderId);
-			throw new JsonResponseException(result.getError());
-		}
-
-		return result.getResult();
+		//移动
 	}
 
 	/**
@@ -210,39 +175,6 @@ public class UserImages {
 		if (user == null) {
 			throw new JsonResponseException(401, messageSources.get("user.not.login"));
 		}
-
-		Response<QxxImage> fileR = userFileService.deleteFile(id);
-		if (!fileR.isSuccess()) {
-			log.warn("failed to find userImage by imageId {} when delete", id);
-			return;
-		}
-
-		QxxImage userFile = fileR.getResult();
-		try {
-			imageServer.delete(userFile.getPath());
-		} catch (Exception e) {
-			log.warn("Failed delete file:{}, error:{}", userFile, e);
-		}
+		// 删除文件
 	}
-
-//	/**
-//	 * 用户是否可更改文件
-//	 * 
-//	 * @param userId
-//	 *            用户编号
-//	 * @param folderId
-//	 *            文件编号
-//	 */
-//	private void checkAuthorize(Long userId, Long folderId) {
-//		Response<Optional<UserFile>> fileRes = userFileService.findById(folderId);
-//		if (!fileRes.isSuccess() || !fileRes.getResult().isPresent()) {
-//			log.error("Don't exist folder with id={}, error code={}", folderId, fileRes.getError());
-//			throw new JsonResponseException(fileRes.getError());
-//		}
-//
-//		if (Objects.equals(fileRes.getResult().get().getCreateBy(), userId)) {
-//			log.error("Can't delete folder={}, by userId={}", folderId, userId);
-//			throw new JsonResponseException("authorize.fail");
-//		}
-//	}
 }
