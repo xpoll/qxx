@@ -19,12 +19,12 @@ public class UploadDto2 implements Serializable {
     /**
      * 文件信息
      */
-    private UserFile image;
+    private UserFile userFile;
 
     /**
      * 文件夹信息
      */
-    private UserFolder album;
+    private UserFolder userFolder;
 
     private String error;
 
@@ -32,17 +32,17 @@ public class UploadDto2 implements Serializable {
 
     public UploadDto2(UserFile image){
         this.type = Type.FILE.toNumber();
-        this.image = image;
+        this.userFile = image;
     }
 
     public UploadDto2(UserFolder album){
         this.type = Type.FOLDER.toNumber();
-        this.album = album;
+        this.userFolder = album;
     }
 
     public UploadDto2(UserFile image, String error){
         this.type = Type.FILE.toNumber();
-        this.image = image;
+        this.userFile = image;
         this.error = error;
     }
 

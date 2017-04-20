@@ -91,22 +91,26 @@ public class UserAlbums {
       album.setId(1L);
       album.setPid(0L);
       album.setFolder("we");
-      album.setGroup("sd");
-      album.setHasChildren(false);
-      album.setLevel(0);
+      album.setHasChildren(true);
+      album.setLevel(1);
       UserFile image = new UserFile();
       image.setFileType(10);
-      image.setFolderId(1L);
-      image.setGroup("sd");
+      image.setFolderId(0L);
       image.setId(1L);
-      image.setName("sdf");
-      image.setPath("sfdff");
+      image.setSize(1944);
+      image.setExtra("{\"width\":64,\"height\":64}");
+      image.setName("sdf.png");
+      image.setPath("http://xpoll.oss-cn-shanghai.aliyuncs.com/qxx/1/2017042021102232372836.png");
       List<UploadDto2> list = Lists.newArrayList();
+      UploadDto2 d = new UploadDto2();
+      d.setUserFile(image);
+      d.setUserFolder(album);
+      list.add(d);
       list.add(new UploadDto2(album));
-      list.add(new UploadDto2(image));
+      
       Map<String, Object> cs = Maps.newHashMap();
       cs.put("data", list);
-      cs.put("total", 2);
+      cs.put("total", 20);
       
       // 为前段组件包一层
       Map<String, Object> result = Maps.newHashMap();
