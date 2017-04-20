@@ -1,4 +1,4 @@
-package cn.blmdz.image;
+package cn.blmdz.model;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import cn.blmdz.entity.QxxAlbum;
 import lombok.Data;
 
 @Data
-public class UploadDto implements Serializable {
+public class UploadDto2 implements Serializable {
 
     private static final long serialVersionUID = -38331060124340967L;
 
@@ -19,30 +19,30 @@ public class UploadDto implements Serializable {
     /**
      * 文件信息
      */
-    private QxxImage userFile;
+    private UserFile image;
 
     /**
      * 文件夹信息
      */
-    private QxxAlbum userFolder;
+    private UserFolder album;
 
     private String error;
 
-    public UploadDto(){}
+    public UploadDto2(){}
 
-    public UploadDto(QxxImage userFile){
+    public UploadDto2(UserFile image){
         this.type = Type.FILE.toNumber();
-        this.userFile = userFile;
+        this.image = image;
     }
 
-    public UploadDto(QxxAlbum userFolder){
+    public UploadDto2(UserFolder album){
         this.type = Type.FOLDER.toNumber();
-        this.userFolder = userFolder;
+        this.album = album;
     }
 
-    public UploadDto(QxxImage userFile, String error){
+    public UploadDto2(UserFile image, String error){
         this.type = Type.FILE.toNumber();
-        this.userFile = userFile;
+        this.image = image;
         this.error = error;
     }
 

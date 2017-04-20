@@ -25,14 +25,16 @@ public interface UserService {
 
 	/**
 	 * 更改密码
+	 * @param id
 	 * @param old
 	 * @param snew
 	 */
-	void updatePwd(String old, String current);
+	void updatePwd(Long id, String old, String current);
 	
 	/**
 	 * 重置密码
+	 * @param id
 	 * @param current
 	 */
-	void resetPwd(String current);
+	void resetPwd(Long id, String current);
 }

@@ -28,7 +28,6 @@ public class PageErrorFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		if(debugger) {
-			httpRequest.getSession().setAttribute("t", "test");
 			System.out.println(httpRequest.getSession().getId());
 			System.out.println(httpRequest.getRequestURI() + " : " +httpResponse.getStatus());
 		}

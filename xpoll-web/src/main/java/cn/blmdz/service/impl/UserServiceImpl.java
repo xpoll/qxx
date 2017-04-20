@@ -59,9 +59,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePwd(String old, String snew) {
+	public void updatePwd(Long id, String old, String snew) {
 		
-		QxxUser user = userDao.findById(UserUtil.getCurrentUser().getId());
+		QxxUser user = userDao.findById(id);
 		if (!EncryptUtil.match(old, user.getPwd())) throw new GlobalException("密码不正确");
 		if (Objects.equal(old, snew)) return;
 		
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void resetPwd(String current) {
+	public void resetPwd(Long id, String current) {
 		QxxUser user = userDao.findById(UserUtil.getCurrentUser().getId());
 		user.setUid(UserUtil.getCurrentUser().getId());
 		user.setUdate(new Date());

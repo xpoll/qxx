@@ -2,7 +2,10 @@ package cn.blmdz.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import cn.blmdz.entity.QxxImage;
+import cn.blmdz.model.UploadDto;
 
 /**
  * 图片
@@ -44,4 +47,14 @@ public interface ImageService {
 	 * @param aid
 	 */
 	void move(Long id, Long aid);
+	
+	/**
+	 * 上传图片
+	 * 假设文件夹已存在, 调用前要判断好文件夹是否存在
+	 * @param id
+	 * @param aid
+	 * @param name
+	 * @param file
+	 */
+	UploadDto upload(Long id, Long aid, String name, MultipartFile file);
 }

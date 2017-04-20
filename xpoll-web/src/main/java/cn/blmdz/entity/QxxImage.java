@@ -39,6 +39,14 @@ public class QxxImage implements Serializable {
 	 * 备注
 	 */
 	private String desc;
+	/**
+	 * 路径
+	 */
+	private String path;
+	/**
+	 * 其他信息
+	 */
+	private String extra;
 	
 	private Date cdate;
 	private Date udate;

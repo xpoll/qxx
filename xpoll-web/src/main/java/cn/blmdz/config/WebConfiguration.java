@@ -1,11 +1,14 @@
 package cn.blmdz.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.google.common.eventbus.EventBus;
 
+import cn.blmdz.aide.file.ImageServer;
+import cn.blmdz.aide.file.aliyun.AliyunImageServer;
 import cn.blmdz.filter.PageErrorFilter;
 
 /**
@@ -25,5 +28,15 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	@Bean
 	public EventBus eventBus() {
 		return new EventBus();
+	}
+	
+	@Bean
+	public ImageServer imageServer(
+			@Value("${oos.endpoint}") String endpoint,
+			@Value("${oos.accessKey}") String appKey,
+			@Value("${oos.accessSecret}") String appSecret,
+			@Value("${oos.bucketName}") String bucketName
+			){
+		return new AliyunImageServer(endpoint, appKey, appSecret, bucketName);
 	}
 }
