@@ -1,4 +1,4 @@
-package site.blmdz.gui;
+package cn.blmdz.gui;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;

@@ -1,4 +1,4 @@
-package site.blmdz.gui;
+package cn.blmdz.gui;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
