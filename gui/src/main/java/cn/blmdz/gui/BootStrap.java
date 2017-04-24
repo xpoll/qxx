@@ -1,4 +1,4 @@
-package site.blmdz.gui;
+package cn.blmdz.gui;
 
 public class BootStrap {
 	public static void main(String[] args) throws Exception {
