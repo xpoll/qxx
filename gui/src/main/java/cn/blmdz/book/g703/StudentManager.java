@@ -48,6 +48,7 @@ public class StudentManager extends JFrame implements ActionListener {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getSQLState(), "标题。", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
