@@ -66,6 +66,7 @@ public class LoginJFrame extends JFrame implements ActionListener {
 		c.add(new JLabel("如果你还没有注册，请注册"));
 		
 		msg = new JDialog();
+		msg.setTitle("提示");
 		msg.setSize(340, 80);
 		msg.setLocation(this.getX() + 100, this.getY() + 100);
 		msg.setLayout(new FlowLayout());
@@ -111,13 +112,16 @@ public class LoginJFrame extends JFrame implements ActionListener {
 			}
 			
 		} else if (e.getSource() == clearBtn) {
-			
+			msg.setVisible(true);
 		} else if (e.getSource() == registerBtn) {
-			
+			new RegisterJFrame();
+			this.setVisible(false);
 		} else if (e.getSource() == resetBtn) {
-			
+			usernameText.setText(null);
+			passwordText.setText(null);
+			msg.setVisible(false);
 		} else if (e.getSource() == outBtn) {
-			
+			System.exit(0);
 		}
 	}
 	public static void main(String[] args) {
