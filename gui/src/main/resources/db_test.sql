@@ -18,7 +18,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for student
 -- ----------------------------
-DROP TABLE IF EXISTS `student`;
+DROP TABLE IF EXISTS `t7_student`;
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `no` int(11) DEFAULT NULL,
@@ -29,18 +29,6 @@ CREATE TABLE `student` (
   `tel` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
--- Table structure for studentinfo
--- ----------------------------
-DROP TABLE IF EXISTS `studentinfo`;
-CREATE TABLE `studentinfo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `class` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Table structure for t_consumer

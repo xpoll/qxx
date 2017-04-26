@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -60,6 +59,7 @@ public class I02 {
 @Data
 @AllArgsConstructor
 class Student implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
 }

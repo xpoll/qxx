@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * jdbc-mysql 工具类
+ * @author yongzongyang
+ * @date 2017年4月25日
+ */
 public class JdbcUtil {
 	public static void connection(CallBackNoResult callBack) {
 		Connection conn = null;
