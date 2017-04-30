@@ -1,7 +1,6 @@
 package cn.blmdz.book.g8;
 
 import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
@@ -30,8 +31,7 @@ public class RegisterJFrame extends JFrame implements ActionListener, ItemListen
 	private JRadioButton boyBtn, grilBtn;
 	private JRadioButton transferBtn, cashBtn, remitBtn, otherBtn;
 	private JComboBox<String> provinceBox, openStatusBox;
-	private JButton nextBtn, resetBtn;
-	private Dialog msg;
+	private JButton nextBtn, resetBtn, retuBtn;
 
 	public RegisterJFrame() {
 		super("现在注册");
@@ -63,11 +63,10 @@ public class RegisterJFrame extends JFrame implements ActionListener, ItemListen
 		p1.add(new JLabel("    一：阅读并同意协议"));
 		p1.add(new JLabel("    二：填写表单"));
 		p1.add(new JLabel("    三：完成注册"));
-		
 		usernameTextField = new JTextField(10);
 		emailTextField = new JTextField(10);
-		passwordTextField = new JTextField(10);
-		surePasswordTextField = new JTextField(10);
+		passwordTextField = new JPasswordField(10);
+		surePasswordTextField = new JPasswordField(10);
 		nameTextField = new JTextField(10);
 		phoneTextField = new JTextField(10);
 		
@@ -124,10 +123,13 @@ public class RegisterJFrame extends JFrame implements ActionListener, ItemListen
 		
 		nextBtn = new JButton("下一步");
 		resetBtn = new JButton("重新填写");
+		retuBtn =  new JButton("返回");
 		
 		nextBtn.addActionListener(this);
 		resetBtn.addActionListener(this);
-		
+		retuBtn.addActionListener(this);
+
+		p1.add(retuBtn);
 		p2.add(nextBtn);
 		p3.add(resetBtn);
 	}
@@ -140,10 +142,70 @@ public class RegisterJFrame extends JFrame implements ActionListener, ItemListen
 				JdbcUtil.connection(new CallBackNoResult() {
 					@Override
 					public void execute(Statement stmt, ResultSet rs) throws SQLException {
-						
+						String xb = ""; // 性别
+						if (boyBtn.isSelected()) {
+							xb = boyBtn.getText();
+						}
+						if (grilBtn.isSelected()) {
+							xb = grilBtn.getText();
+						}
+						String sf = ""; // 省份
+						if (provinceBox.getSelectedIndex() == 0) {
+							sf = "河南";
+						}
+						if (provinceBox.getSelectedIndex() == 1) {
+							sf = "北京";
+						}
+						if (provinceBox.getSelectedIndex() == 2) {
+							sf = "上海";
+						}
+						String fs = ""; // 付款方式
+						if (transferBtn.isSelected()) {
+							fs = transferBtn.getText();
+						}
+						if (cashBtn.isSelected()) {
+							fs = cashBtn.getText();
+						}
+						if (remitBtn.isSelected()) {
+							fs = remitBtn.getText();
+						}
+						if (otherBtn.isSelected()) {
+							fs = otherBtn.getText();
+						}
+						String zt = ""; // 开通状态
+						if (openStatusBox.getSelectedIndex() == 0) {
+							zt = "开通";
+						}
+						if (openStatusBox.getSelectedIndex() == 1) {
+							zt = "未开通";
+						}
+						String sql = "insert into t_consumer (`id`,`password`,`name`,`sex`,`method`,`province`,`telephone`,`mailaddress`,`date`,`state`)"
+								+ " values('" + usernameTextField.getText() + "',"
+										+ "'" + passwordTextField.getText() + "',"
+										+ "'" + nameTextField.getText() + "',"
+										+ "'" + xb + "',"
+										+ "'" + fs + "',"
+										+ "'" + sf + "',"
+										+ "'" + phoneTextField.getText() + "',"
+										+ "'" + emailTextField.getText() + "',"
+										+ "now(),"
+										+ "'" + zt + "')";
+						System.out.println(sql);
+						stmt.executeUpdate(sql);
 					}
 				});
 			}
+			JOptionPane.showMessageDialog(this, "两次密码不一致", "系统提示", JOptionPane.ERROR_MESSAGE);
+		} else if (e.getSource() == resetBtn) {
+			usernameTextField.setText(null);
+			passwordTextField.setText(null);
+			surePasswordTextField.setText(null);
+			nameTextField.setText(null);
+			phoneTextField.setText(null);
+			emailTextField.setText(null);
+		} else if (e.getSource() == retuBtn) {
+			new LoginJFrame();
+			this.setVisible(false);
 		}
 		
 	}
