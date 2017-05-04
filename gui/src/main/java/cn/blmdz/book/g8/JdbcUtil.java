@@ -25,6 +25,7 @@ public class JdbcUtil {
 			System.out.println("ClassNotFoundException");
 		} catch (SQLException e) {
 			System.out.println("SQLException");
+			e.printStackTrace();
 		} finally {
 			try {
 				if (stmt != null) stmt.close();
