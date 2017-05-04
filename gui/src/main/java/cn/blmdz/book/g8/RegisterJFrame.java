@@ -1,7 +1,6 @@
 package cn.blmdz.book.g8;
 
 import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +30,6 @@ public class RegisterJFrame extends JFrame implements ActionListener, ItemListen
 	private JRadioButton transferBtn, cashBtn, remitBtn, otherBtn;
 	private JComboBox<String> provinceBox, openStatusBox;
 	private JButton nextBtn, resetBtn;
-	private Dialog msg;
 
 	public RegisterJFrame() {
 		super("现在注册");
