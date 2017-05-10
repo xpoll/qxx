@@ -28,9 +28,9 @@ redis:
   port: 6379
 oos:
   endpoint: http://oss-cn-shanghai.aliyuncs.com
-  accessKey: LTAIOucdAfA5jDC1
-  accessSecret: 3Cx6UXWh1bb8wnYK2D1hti7jYhYHeX
-  bucketName: xpoll
+  accessKey: xxx
+  accessSecret: xxx
+  bucketName: xxx
 session:
   cookie-domain: 127.0.0.1
   cookie-context-path: /
