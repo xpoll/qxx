@@ -1,4 +1,4 @@
-package cn.blmdz.common.util;
+package cn.blmdz.hbs.util;
 
 import java.util.HashMap;
 import java.util.Map;
