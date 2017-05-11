@@ -7,6 +7,8 @@ import com.github.jknack.handlebars.io.TemplateLoader;
 import com.google.common.collect.Maps;
 
 import cn.blmdz.hbs.file.FileLoaderHelper;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import java.util.Map;
 @Component
 public class HandlebarsEngine implements ApplicationContextAware {
 
+	@Getter
+	@Setter
     private ApplicationContext context;
 
     private Handlebars handlebars;
@@ -58,23 +62,14 @@ public class HandlebarsEngine implements ApplicationContextAware {
             if (isComponent) {
                 String componentViewPath = "component:" + path; // + "/view";
                 template = this.handlebars.compile(componentViewPath);
-//                if (this.caches == null) {
-//                } else {
-//                    template = this.caches.getUnchecked(this.getAppPathKey(componentViewPath)).orNull();
-//                }
 
                 if (template == null) {
                     log.error("failed to exec handlebars template:path={}", path);
                     return "";
                 }
-
                 context.put("_COMP_PATH_", path);
             } else {
-                    template = this.handlebars.compile(path);
-//                if (this.caches == null) {
-//                } else {
-//                    template = this.caches.getUnchecked(this.getAppPathKey(path)).orNull();
-//                }
+                template = this.handlebars.compile(path);
                 if (template == null) {
                     throw new FileNotFoundException("view not found: " + path);
                 }

@@ -1,5 +1,6 @@
 package cn.blmdz.hbs.controller;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -33,6 +34,10 @@ public class GloableController {
         String domain = Domains.getDomainFromRequest(request);
         String path = request.getRequestURI().substring(request.getContextPath().length() + 1);
         System.out.println(domain + ": " + path);
+        
+        if (Strings.isNullOrEmpty(path)) {
+        	path = "index";
+        }
 
         String method = request.getMethod().toUpperCase();
         System.out.println(method);
