@@ -37,7 +37,7 @@ public class GreatTemplateLoader extends AbstractTemplateLoader {
 		Validate.notEmpty(location, "The uri is required.", new Object[0]);
 		FileLoader.Resp resp = this.getResource(location);
 		if (resp.isNotFound()) {
-			throw new FileNotFoundException(location);
+			throw new FileNotFoundException(location + " not found");
 		} else {
 			return new StringTemplateSource(location, resp.asString());
 		}

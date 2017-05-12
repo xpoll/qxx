@@ -21,7 +21,7 @@ public class FileLoaderClasspath implements FileLoader {
 			resp.setSign("UNSUPPORTED");
 			return resp;
 		} catch (Exception e) {
-			log.error("error when load classpath file: {}", path, e);
+			log.error("error when load classpath file: {}, case:{}", path, e.getMessage());
 			return Resp.NOT_FOUND;
 		}
 	}

@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.assertj.core.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
@@ -14,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Maps;
 import com.google.common.eventbus.EventBus;
 
 import cn.blmdz.common.exception.JsonResponseException;
+import cn.blmdz.common.util.MapBuilder;
 import cn.blmdz.entity.QxxUser;
 import cn.blmdz.exception.GlobalException;
 import cn.blmdz.service.UserService;
@@ -56,6 +57,9 @@ public class Users {
         eventBus.post(new LoginEvent(UserMaker.from(user)));
         
         target = !StringUtils.hasText(target)?"/":target;
-        return Maps.<String, Object>newHashMap("redirect", target);
+        
+        Map<String, Object> content = Maps.newHashMap();
+        content.put("redirect", target);
+        return content;
 	}
 }

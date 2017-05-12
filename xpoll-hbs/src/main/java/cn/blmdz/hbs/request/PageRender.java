@@ -11,9 +11,7 @@ import com.google.common.base.Strings;
 
 import cn.blmdz.hbs.exception.NotFound404Exception;
 import cn.blmdz.hbs.hbs.HandlebarsEngine;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Component
 public class PageRender {
 	@Autowired
@@ -23,17 +21,16 @@ public class PageRender {
 		return this.naiveRender(path, context);
 	}
 
-	public String naiveRender(String path, Map<String, Object> context) throws NotFound404Exception {
+	public String naiveRender(String path, Map<String, Object> context) {
 		return this.naiveRender(path, null, context);
 	}
 
-	public String naiveRender(String templatePath, String shownPath, Map<String, Object> context) throws NotFound404Exception {
+	public String naiveRender(String templatePath, String shownPath, Map<String, Object> context) {
 		context.put("_PATH_", MoreObjects.firstNonNull(Strings.emptyToNull(shownPath), templatePath));
 
 		try {
 			return this.handlebarsEngine.execPath(templatePath, context, false);
 		} catch (FileNotFoundException e) {
-			log.error("failed to find page {},cause:{}", new Object[] { templatePath, e.getMessage(), e });
 			throw new NotFound404Exception("page not found");
 		}
 	}

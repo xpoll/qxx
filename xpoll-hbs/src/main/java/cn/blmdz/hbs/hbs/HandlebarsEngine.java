@@ -1,5 +1,14 @@
 package cn.blmdz.hbs.hbs;
 
+import java.io.FileNotFoundException;
+import java.util.Map;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Template;
@@ -10,15 +19,6 @@ import cn.blmdz.hbs.file.FileLoaderHelper;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * Created by yongzongyang on 2017/5/11.
@@ -62,7 +62,6 @@ public class HandlebarsEngine implements ApplicationContextAware {
             if (isComponent) {
                 String componentViewPath = "component:" + path; // + "/view";
                 template = this.handlebars.compile(componentViewPath);
-
                 if (template == null) {
                     log.error("failed to exec handlebars template:path={}", path);
                     return "";
@@ -70,13 +69,15 @@ public class HandlebarsEngine implements ApplicationContextAware {
                 context.put("_COMP_PATH_", path);
             } else {
                 template = this.handlebars.compile(path);
-                if (template == null) {
-                    throw new FileNotFoundException("view not found: " + path);
-                }
             }
             return template.apply(context);
-        } catch (IOException e) {
-            log.error("failed to exec handlebars template:path={}", path);
+        } catch (FileNotFoundException e) {
+			log.error("failed to execute handlebars\' template(path={}),cause:{} ", path, e.getMessage());
+			if (!isComponent) {
+                throw new FileNotFoundException("view not found: " + path);
+			}
+    	} catch (Exception e) {
+			log.error("failed to execute handlebars\' template(path={}),cause:{} ", path, e);
         }
         return "";
     }

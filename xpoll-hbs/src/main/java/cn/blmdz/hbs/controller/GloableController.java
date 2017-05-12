@@ -33,14 +33,13 @@ public class GloableController {
                            Map<String, Object> content) {
         String domain = Domains.getDomainFromRequest(request);
         String path = request.getRequestURI().substring(request.getContextPath().length() + 1);
-        System.out.println(domain + ": " + path);
+        String method = request.getMethod().toUpperCase();
+        
+        System.out.println(method + ": " + domain + ": " + path);
         
         if (Strings.isNullOrEmpty(path)) {
         	path = "index";
         }
-
-        String method = request.getMethod().toUpperCase();
-        System.out.println(method);
 
         List<Map<String, String>> list = Lists.newArrayList();
         Map<String, String> map = Maps.newHashMap();
@@ -48,8 +47,8 @@ public class GloableController {
         map.put("age", "23");
         list.add(map);
         map = Maps.newHashMap();
-        map.put("a", "Lily");
-        map.put("age", "23");
+        map.put("a", "Tom");
+        map.put("age", "25");
         list.add(map);
         content.put("data", list);
 
