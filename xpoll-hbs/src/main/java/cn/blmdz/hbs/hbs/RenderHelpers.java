@@ -28,5 +28,29 @@ public class RenderHelpers extends AbstractHelpers {
 				return new SafeString(handlebarsEngine.execPath(compPath, tempContext, true));
 			}
 		});
+		helpers.put("component", new Helper<String>() {
+			@Override
+			public CharSequence apply(String tag, Options options) throws IOException {
+				
+				String path = "/apps/" + options.fn.filename().replace(":", "s/");
+				
+				StringBuilder sb = new StringBuilder();
+				
+				if (tag.contains("js")) {
+					sb.append("<script type=\"text/javascript\" src=\"")
+					.append(path)
+					.append(".js")
+					.append("\"></script>");
+				}
+				
+				if (tag.contains("css")) {
+					sb.append("<link rel=\"stylesheet\" href=\"")
+					.append(path)
+					.append(".css")
+					.append("\">");
+				}
+				return new SafeString(options.fn() + sb.toString());
+			}
+		});
 	}
 }

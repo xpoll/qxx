@@ -60,7 +60,7 @@ public class HandlebarsEngine implements ApplicationContextAware {
             Template template;
             // 是否是组件
             if (isComponent) {
-                String componentViewPath = "component:" + path; // + "/view";
+                String componentViewPath = "component:" + path + "/view";
                 template = this.handlebars.compile(componentViewPath);
                 if (template == null) {
                     log.error("failed to exec handlebars template:path={}", path);

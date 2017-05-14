@@ -80,6 +80,7 @@ public class RenderHelpers extends AbstractHelpers {
 				cn.blmdz.hunt.engine.config.model.Component component = new cn.blmdz.hunt.engine.config.model.Component();
 				component.setPath(compPath);
 				Object firstParam = options.param(0, Boolean.valueOf(true));
+				// true 则有配置文件
 				if (firstParam.equals(Boolean.valueOf(true))) {
 					cn.blmdz.hunt.engine.config.model.Component result = RenderHelpers.this.configManager
 							.findComponent(ThreadVars.getAppKey(), compPath);
