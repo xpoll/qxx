@@ -15,6 +15,8 @@ import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import com.google.common.collect.Maps;
 
+import cn.blmdz.hbs.config.Components;
+import cn.blmdz.hbs.config.ConfigYaml;
 import cn.blmdz.hbs.file.FileLoaderHelper;
 import cn.blmdz.hbs.services.SpringExecutor;
 import lombok.Getter;
@@ -36,6 +38,9 @@ public class HandlebarsEngine implements ApplicationContextAware {
     
     @Autowired
     private SpringExecutor springExecutor;
+    
+    @Autowired
+    private ConfigYaml configYaml;
 
     @Autowired
     public HandlebarsEngine(FileLoaderHelper fileLoaderHelper) {
@@ -87,9 +92,10 @@ public class HandlebarsEngine implements ApplicationContextAware {
     }
     
     public String execComponent(String path, Map<String, Object> context) throws FileNotFoundException {
-    	String uri = "cn.blmdz.hbs.services.Tests:test";
-    	if (springExecutor.detectType(uri)) {
-    		Object obj = springExecutor.exec(uri, context);
+    	Components c = configYaml.loadComponent(path);
+    	
+    	if (c !=null && springExecutor.detectType(c.getUri())) {
+    		Object obj = springExecutor.exec(c.getUri(), context);
     		context.put("_DATA_", obj);
     	}
     	return execPath(path, context, true);
