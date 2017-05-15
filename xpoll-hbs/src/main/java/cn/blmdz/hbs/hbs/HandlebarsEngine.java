@@ -16,6 +16,7 @@ import com.github.jknack.handlebars.io.TemplateLoader;
 import com.google.common.collect.Maps;
 
 import cn.blmdz.hbs.file.FileLoaderHelper;
+import cn.blmdz.hbs.services.SpringExecutor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,9 @@ public class HandlebarsEngine implements ApplicationContextAware {
     private ApplicationContext context;
 
     private Handlebars handlebars;
+    
+    @Autowired
+    private SpringExecutor springExecutor;
 
     @Autowired
     public HandlebarsEngine(FileLoaderHelper fileLoaderHelper) {
@@ -80,5 +84,14 @@ public class HandlebarsEngine implements ApplicationContextAware {
 			log.error("failed to execute handlebars\' template(path={}),cause:{} ", path, e);
         }
         return "";
+    }
+    
+    public String execComponent(String path, Map<String, Object> context) throws FileNotFoundException {
+    	String uri = "cn.blmdz.hbs.services.Tests:test";
+    	if (springExecutor.detectType(uri)) {
+    		Object obj = springExecutor.exec(uri, context);
+    		context.put("_DATA_", obj);
+    	}
+    	return execPath(path, context, true);
     }
 }

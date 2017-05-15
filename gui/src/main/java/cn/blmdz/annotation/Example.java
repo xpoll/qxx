@@ -12,4 +12,9 @@ public class Example {
 	public String value() {
 		return "value";
 	}
+	@MyAnnotation
+	public String test(String a, Integer b) {
+		
+		return a + "," + b;
+	}
 }

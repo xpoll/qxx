@@ -25,7 +25,7 @@ public class RenderHelpers extends AbstractHelpers {
 				if (options.context.model() instanceof Map) {
 					tempContext.putAll((Map<String, Object>) options.context.model());
 				}
-				return new SafeString(handlebarsEngine.execPath(compPath, tempContext, true));
+				return new SafeString(handlebarsEngine.execComponent(compPath, tempContext));
 			}
 		});
 		helpers.put("component", new Helper<String>() {
