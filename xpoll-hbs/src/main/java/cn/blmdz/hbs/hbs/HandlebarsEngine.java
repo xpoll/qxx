@@ -3,24 +3,24 @@ package cn.blmdz.hbs.hbs;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-import org.springframework.beans.BeansException;
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.TemplateLoader;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 import cn.blmdz.hbs.config.Components;
 import cn.blmdz.hbs.config.ConfigYaml;
+import cn.blmdz.hbs.config.HbsProperties;
+import cn.blmdz.hbs.config.RenderConstants;
 import cn.blmdz.hbs.file.FileLoaderHelper;
 import cn.blmdz.hbs.services.SpringExecutor;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -28,23 +28,18 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-public class HandlebarsEngine implements ApplicationContextAware {
-
-	@Getter
-	@Setter
-    private ApplicationContext context;
+public class HandlebarsEngine {
 
     private Handlebars handlebars;
     
-    @Autowired
-    private SpringExecutor springExecutor;
+    @Autowired private SpringExecutor springExecutor;
+    @Autowired private ConfigYaml configYaml;
+	@Autowired private HbsProperties properties;
+    @Autowired private FileLoaderHelper fileLoaderHelper;
     
-    @Autowired
-    private ConfigYaml configYaml;
-
-    @Autowired
-    public HandlebarsEngine(FileLoaderHelper fileLoaderHelper) {
-        TemplateLoader templateLoader = new GreatTemplateLoader(fileLoaderHelper);
+    @PostConstruct
+    public void init() {
+        TemplateLoader templateLoader = new GreatTemplateLoader(fileLoaderHelper, properties.getRoot() + "/" + properties.getHome());
         this.handlebars = new Handlebars(templateLoader);
     }
 
@@ -57,10 +52,7 @@ public class HandlebarsEngine implements ApplicationContextAware {
             this.handlebars.registerHelper(key, helpers.get(key));
         }
     }
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = applicationContext;
-    }
-
+    
     public String execPath(String path, Map<String, Object> context, boolean isComponent) throws FileNotFoundException {
 
         if (context == null) context = Maps.newHashMap();
@@ -75,7 +67,8 @@ public class HandlebarsEngine implements ApplicationContextAware {
                     log.error("failed to exec handlebars template:path={}", path);
                     return "";
                 }
-                context.put("_COMP_PATH_", path);
+                
+                context.put(RenderConstants.COMPONENT_PATH, path);
             } else {
                 template = this.handlebars.compile(path);
             }
@@ -94,9 +87,9 @@ public class HandlebarsEngine implements ApplicationContextAware {
     public String execComponent(String path, Map<String, Object> context) throws FileNotFoundException {
     	Components c = configYaml.loadComponent(path);
     	
-    	if (c !=null && springExecutor.detectType(c.getUri())) {
+    	if (c !=null && !Strings.isNullOrEmpty(c.getUri()) && springExecutor.detectType(c.getUri())) {
     		Object obj = springExecutor.exec(c.getUri(), context);
-    		context.put("_DATA_", obj);
+    		context.put(RenderConstants.DATA, obj);
     	}
     	return execPath(path, context, true);
     }

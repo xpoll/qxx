@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.Data;
+
 @RestController
 @RequestMapping("api")
 public class Testc {
@@ -16,4 +18,20 @@ public class Testc {
 		System.out.println();
 		return json;
 	}
+
+	@RequestMapping(value="teacher", method=RequestMethod.POST)
+	public Teacher p (@RequestBody Teacher teacher) {
+		
+		return teacher;
+	}
+	@RequestMapping(value="teacher1", method=RequestMethod.POST)
+	public Teacher p1 (Teacher teacher) {
+		
+		return teacher;
+	}
+}
+@Data
+class Teacher {
+	private Long id;
+	private String name;
 }

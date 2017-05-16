@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Iterables;
 
+import cn.blmdz.hbs.config.HbsProperties;
 import cn.blmdz.hbs.file.FileLoader;
 import cn.blmdz.hbs.file.FileLoaderHelper;
 import cn.blmdz.hbs.util.MimeTypes;
@@ -26,6 +27,9 @@ public class AssetsHandler {
 	@Autowired
 	private FileLoaderHelper fileLoaderHelper;
 
+	@Autowired
+	private HbsProperties properties;
+
 	/**
 	 * 不是媒体或静态文件返回false <br>
 	 * 有资源直接write（404设置状态）返回true 
@@ -37,8 +41,9 @@ public class AssetsHandler {
 			return false;
 
 		response.setContentType(MimeTypes.getType(Iterables.getLast(fileInfo)));
-
-		String realPath = "classpath:" + path;
+		
+		String realPath = properties.getRoot() + path;
+		
 		FileLoader.Resp resp = fileLoaderHelper.load(realPath);
 		if (resp.isNotFound()) {
 			if (log.isDebugEnabled()) {

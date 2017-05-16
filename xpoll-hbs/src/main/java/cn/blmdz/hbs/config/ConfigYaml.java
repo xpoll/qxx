@@ -12,8 +12,11 @@ public class ConfigYaml {
 	@Autowired
 	private FileLoaderHelper fileLoaderHelper;
 	
+	@Autowired
+	private HbsProperties properties;
+	
 	private ConfigFile load() {
-		return new Yaml().loadAs(fileLoaderHelper.load("classpath:config_file.yaml").asString(), ConfigFile.class);
+		return new Yaml().loadAs(fileLoaderHelper.load(properties.getRoot() + "/" + properties.getHome() + "/files/config_file.yaml").asString(), ConfigFile.class);
 	}
 	
 	public Components loadComponent(String path) {

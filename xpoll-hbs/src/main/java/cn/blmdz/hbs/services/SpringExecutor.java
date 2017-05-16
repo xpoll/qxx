@@ -18,13 +18,11 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import cn.blmdz.hbs.exception.ServiceException;
 import cn.blmdz.hbs.util.Export;
 import cn.blmdz.hbs.util.ParamUtil;
 import cn.blmdz.hbs.util.ParamUtil.MethodInfo;
 import cn.blmdz.hbs.util.ParamUtil.ParamInfo;
 import cn.blmdz.hbs.util.Splitters;
-import lombok.Getter;
 
 @Component
 public class SpringExecutor {
@@ -85,44 +83,16 @@ public class SpringExecutor {
 				concernedParams[index++] = ParamUtil.convert(param, paramInfo, params);
 			}
 
-			Object object;
 			try {
-				object = methodInfo.getMethod().invoke(methodInfo.getBean(), concernedParams);
+				return methodInfo.getMethod().invoke(methodInfo.getBean(), concernedParams);
 			} catch (IllegalAccessException e) {
 				log.error("illegal access method, service: {}", uri, e);
-				throw new ServiceException(e);
 			} catch (InvocationTargetException e) {
 				log.error("invocation target exception, service: {}", uri, e);
-				if (e.getTargetException() instanceof RuntimeException) {
-					throw (RuntimeException) e.getTargetException();
-				}
-
-				throw new ServiceException(e.getTargetException().getMessage(), e);
 			}
-
-			return this.unwrapResponse(object);
+			return null;
 		}
 
-	}
-	protected Object unwrapResponse(Object result) {
-//		if (result == null) {
-//			return null;
-//		} else if (result instanceof Response) {
-//			Response<?> resp = (Response<?>) result;
-//			if (resp.isSuccess()) {
-//				return resp.getResult();
-//			} else {
-//				log.error("failed to execute service, error code:{}", resp.getError());
-//				if (this.messageSources != null) {
-//					throw new ServiceException(this.messageSources.get(resp.getError()));
-//				} else {
-//					throw new ServiceException(resp.getError());
-//				}
-//			}
-//		} else {
-//			return result;
-//		}
-		return result;
 	}
 
 	private Method findMethodByName(Class<?> beanClazz, String methodName) {
@@ -133,20 +103,5 @@ public class SpringExecutor {
 				return method;
 		}
 		return null;
-	}
-
-	@Getter
-	protected static class ServiceInfo {
-		private final Class<?> klass;
-		private final Method method;
-		private final Class<?>[] types;
-		private final String[] paramNames;
-
-		public ServiceInfo(Class<?> klass, Method method, Class<?>[] types, String[] paramNames) {
-			this.klass = klass;
-			this.method = method;
-			this.types = types;
-			this.paramNames = paramNames;
-		}
 	}
 }

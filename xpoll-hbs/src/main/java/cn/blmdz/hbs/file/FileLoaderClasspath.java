@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileLoaderClasspath implements FileLoader {
 
 	public Resp load(String path) {
-		path = Protocol.removeProtocol(path, Protocol.CLASSPATH);
+		path = removeSlash(Protocol.removeProtocol(path, Protocol.CLASSPATH));
 		try {
 			URL e = Resources.getResource(path);
 			Resp resp = new Resp();
@@ -26,6 +26,11 @@ public class FileLoaderClasspath implements FileLoader {
 		}
 	}
 
+	private String removeSlash(String path) {
+		while(path.startsWith("/")) {path = path.substring(1);}
+		return path;
+	}
+	
 	public Resp load(String path, String sign) {
 		return Resp.NOT_MODIFIED;
 	}

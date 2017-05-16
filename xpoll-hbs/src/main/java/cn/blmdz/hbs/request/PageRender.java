@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 
+import cn.blmdz.hbs.config.RenderConstants;
 import cn.blmdz.hbs.exception.NotFound404Exception;
 import cn.blmdz.hbs.hbs.HandlebarsEngine;
 
@@ -26,7 +27,7 @@ public class PageRender {
 	}
 
 	public String naiveRender(String templatePath, String shownPath, Map<String, Object> context) {
-		context.put("_PATH_", MoreObjects.firstNonNull(Strings.emptyToNull(shownPath), templatePath));
+		context.put(RenderConstants.PAGE, MoreObjects.firstNonNull(Strings.emptyToNull(shownPath), templatePath));
 
 		try {
 			return this.handlebarsEngine.execPath(templatePath, context, false);

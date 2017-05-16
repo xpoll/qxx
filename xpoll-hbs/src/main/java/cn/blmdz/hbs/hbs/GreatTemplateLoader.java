@@ -27,10 +27,14 @@ public class GreatTemplateLoader extends AbstractTemplateLoader {
 			.put(Protocol.ZK, "")
 			.put(Protocol.REDIS, "")
 			.map();
+	
 	private FileLoaderHelper fileLoaderHelper;
+	
+	private String rpath;
 
-	public GreatTemplateLoader(FileLoaderHelper fileLoaderHelper) {
+	public GreatTemplateLoader(FileLoaderHelper fileLoaderHelper, String rpath) {
 		this.fileLoaderHelper = fileLoaderHelper;
+		this.rpath = rpath;
 	}
 
 	public TemplateSource sourceAt(String location) throws IOException {
@@ -51,8 +55,7 @@ public class GreatTemplateLoader extends AbstractTemplateLoader {
 
 		Protocol protocol = Protocol.analyze(location);
 		if (protocol == Protocol.NONE) {
-			String home = "classpath:apps/";
-			location = home + (isComponent ? "components/" : "views/") + this.normalize(location);
+			location = rpath + "/" + (isComponent ? "components/" : "views/") + this.normalize(location);
 		}
 
 		return this.fileLoaderHelper.load(location + PROTOCOL_SUFFIXS.get(protocol));

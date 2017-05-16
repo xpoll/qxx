@@ -10,10 +10,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @EnableWebMvc
 @SpringBootApplication
-public class NormalApplication {
+public class HbsApplication {
 
     public static void main(String[] args) {
-        SpringApplication application = new SpringApplication(NormalApplication.class);
+        SpringApplication application = new SpringApplication(HbsApplication.class);
         application.run(args);
     }
 }

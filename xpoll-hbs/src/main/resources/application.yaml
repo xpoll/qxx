@@ -1,3 +1,20 @@
 server:
   context-path: /
   port: 8081
+  
+qxx:
+  root: classpath:/
+  home: apps
+  locale: zh_CN
+  devMode: true
+  
+  oos:
+    endpoint: http://oss-cn-shanghai.aliyuncs.com
+    accessKey: xxx
+    accessSecret: xxx
+    bucketName: xxx
+    
+logging:
+  file: /home/xpoll/log/hbs-web.log
+  level.*: INFO
+  level.cn.blmdz: DEBUG

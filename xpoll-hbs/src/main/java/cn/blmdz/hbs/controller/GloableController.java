@@ -1,21 +1,19 @@
 package cn.blmdz.hbs.controller;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import java.util.Map;
 
-import cn.blmdz.hbs.request.AssetsHandler;
-import cn.blmdz.hbs.request.ViewRender;
-import cn.blmdz.hbs.util.Domains;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import java.util.Map;
+import com.google.common.base.Strings;
+
+import cn.blmdz.hbs.request.AssetsHandler;
+import cn.blmdz.hbs.request.ViewRender;
+import cn.blmdz.hbs.util.Domains;
 
 /**
  * Created by yongzongyang on 2017/5/11.
@@ -40,18 +38,6 @@ public class GloableController {
         if (Strings.isNullOrEmpty(path)) {
         	path = "index";
         }
-
-        List<Map<String, String>> list = Lists.newArrayList();
-        Map<String, String> map = Maps.newHashMap();
-        map.put("a", "Lily");
-        map.put("age", "23");
-        list.add(map);
-        map = Maps.newHashMap();
-        map.put("a", "Tom");
-        map.put("age", "25");
-        list.add(map);
-        content.put("data", list);
-
 
         boolean isAssets = assetsHandler.handle(path, response);
         if (!isAssets) {

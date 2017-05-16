@@ -11,11 +11,15 @@ import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import com.google.common.collect.Maps;
 
+import cn.blmdz.hbs.config.HbsProperties;
+
 @Component
 public class RenderHelpers extends AbstractHelpers {
 
 	@Autowired
 	private HandlebarsEngine handlebarsEngine;
+	@Autowired
+	private HbsProperties properties;
 
 	protected void fillHelpers(Map<String, Helper<?>> helpers) {
 		helpers.put("inject", new Helper<String>() {
@@ -32,7 +36,7 @@ public class RenderHelpers extends AbstractHelpers {
 			@Override
 			public CharSequence apply(String tag, Options options) throws IOException {
 				
-				String path = "/apps/" + options.fn.filename().replace(":", "s/");
+				String path = "/" + properties.getHome() + "/" + options.fn.filename().replace(":", "s/");
 				
 				StringBuilder sb = new StringBuilder();
 				
