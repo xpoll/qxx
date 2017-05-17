@@ -10,9 +10,9 @@ import java.lang.reflect.Type;
 public class MainAnnotation {
 
 	public static void main(String[] args) throws Exception {
-//		example1();
-//		example2();
-//		example3();
+		example1();
+		example2();
+		example3();
 		example4();
 	}
 

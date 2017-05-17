@@ -58,6 +58,21 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
+		<!-- file -->
+		<dependency>
+			<groupId>cn.blmdz.aide</groupId>
+			<artifactId>qxx-aide-file</artifactId>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+			<groupId>cn.blmdz.aide</groupId>
+			<artifactId>qxx-aide-redis</artifactId>
+		</dependency>
+		<!-- session -->
+		<dependency>
+			<groupId>cn.blmdz.aide</groupId>
+			<artifactId>qxx-aide-session</artifactId>
+		</dependency>
 
     </dependencies>
 

@@ -20,28 +20,38 @@ import cn.blmdz.hbs.util.Domains;
  */
 @Controller
 public class GloableController {
-    @Autowired
-    private AssetsHandler assetsHandler;
-    @Autowired
-    private ViewRender viewRender;
+	@Autowired
+	private AssetsHandler assetsHandler;
+	@Autowired
+	private ViewRender viewRender;
 
-    @RequestMapping
-    public void controller(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Map<String, Object> content) {
-        String domain = Domains.getDomainFromRequest(request);
-        String path = request.getRequestURI().substring(request.getContextPath().length() + 1);
-        String method = request.getMethod().toUpperCase();
-        
-        System.out.println(method + ": " + domain + ": " + path);
-        
-        if (Strings.isNullOrEmpty(path)) {
-        	path = "index";
-        }
+	@RequestMapping
+	public void controller(HttpServletRequest request, HttpServletResponse response, Map<String, Object> context) {
+		String domain = Domains.getDomainFromRequest(request);
+		String path = request.getRequestURI().substring(request.getContextPath().length() + 1);
+		String method = request.getMethod().toUpperCase();
 
-        boolean isAssets = assetsHandler.handle(path, response);
-        if (!isAssets) {
-            viewRender.view(domain, path, request, response, content);
-        }
-    }
+		context = prepareContext(request, context);
+
+		System.out.println(method + ": " + domain + ": " + path);
+
+		if (Strings.isNullOrEmpty(path)) {
+			path = "index";
+		}
+
+		boolean isAssets = assetsHandler.handle(path, response);
+		if (!isAssets) {
+			viewRender.view(domain, path, request, response, context);
+		}
+	}
+
+	private Map<String, Object> prepareContext(HttpServletRequest request, Map<String, Object> context) {
+		if (request != null) {
+			for (String name : request.getParameterMap().keySet()) {
+				context.put(name, request.getParameter(name));
+			}
+		}
+		// context.put(RenderConstants.USER, UserUtil.getCurrentUser());
+		return context;
+	}
 }

@@ -18,3 +18,22 @@ logging:
   file: /home/xpoll/log/hbs-web.log
   level.*: INFO
   level.cn.blmdz: DEBUG
+    
+session:
+  cookie-domain: 127.0.0.1
+  cookie-context-path: /
+  cookie-name: qxx
+  cookie-max-age: 1800
+  source: redis
+  serialize-type: json
+  redis-index: 0
+  redis-prefix: qxxsession
+    
+redis:
+  host: 127.0.0.1
+  port: 6379
+  
+# spring 安全监控
+management:
+  security:
+    enabled: false

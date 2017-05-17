@@ -1,5 +1,5 @@
 {{#partial "title"}}404{{/partial}}
 {{#partial "body"}}
-	<h1>404</h1>
+	{{inject "common/error" data="您访问的页面不存在"}}
 {{/partial}}
 {{> layout}}

@@ -44,11 +44,11 @@ public class ViewRender {
 			html = Strings.nullToEmpty(getHtml.get());
 		} catch (NotFound404Exception e) {
 			log.error("render failed, cause:{}", e.getMessage());
-			forward("404", request, response);
+			forward("/404", request, response);
 			return;
 		} catch (Exception e) {
 			log.error("render failed, cause:{}", Throwables.getStackTraceAsString(e));
-			forward("500", request, response);
+			forward("/500", request, response);
 		}
 		if (html.startsWith("forward:")) {
 			String forwardPath = html.substring("forward:".length());

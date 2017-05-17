@@ -4,12 +4,12 @@ components:
     category: ADMIN
     name: 小C
     desc: 小C的渲染
-    uri: cn.blmdz.hbs.services.Tests:testa
+    #uri: cn.blmdz.web.service.api.TestService:testb
   b:
     category: ADMIN
     name: 小B
     desc: 小B的渲染
-    uri: cn.blmdz.hbs.services.Tests:bbb
+    #uri: cn.blmdz.web.service.api.TestService:bbb
     
 ### 默认权限
 defaults:

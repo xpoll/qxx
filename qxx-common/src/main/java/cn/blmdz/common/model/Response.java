@@ -17,29 +17,29 @@ public class Response<T> implements Serializable {
     @Getter
     private boolean success;
     @Getter
-    private T result;
+    private T data;
     @Getter
-    private String error;
+    private String msg;
 
-    public void setResult(T result) {
+    public void setData(T data) {
         this.success = true;
-        this.result = result;
+        this.data = data;
     }
 
-    public void setError(String error) {
+    public void setMsg(String msg) {
         this.success = false;
-        this.error = error;
+        this.msg = msg;
     }
 
     public static <T> Response<T> ok(T data) {
         Response<T> resp = new Response<T>();
-        resp.setResult(data);
+        resp.setData(data);
         return resp;
     }
 
     public static <T> Response<T> fail(String error) {
         Response<T> resp = new Response<T>();
-        resp.setError(error);
+        resp.setMsg(error);
         return resp;
     }
 
