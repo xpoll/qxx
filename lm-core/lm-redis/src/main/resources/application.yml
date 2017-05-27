@@ -1,6 +1,0 @@
-logging:
-  file: /home/lm/log/redis.log
-  level.*: INFO
-redis:
-  host: 127.0.0.1
-  port: 6379

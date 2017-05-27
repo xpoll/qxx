@@ -6,14 +6,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-  	<module>lm-dubbo-provider</module>
-  	<module>lm-dubbo-consumer</module>
   	<module>lm-mobile</module>
   	<module>lm-ws-product</module>
   	<module>lm-ws-consum-api</module>
   	<module>lm-ws-consum</module>
-  	<module>lm-redis</module>
-    <module>lm-redis-spring</module>
   </modules>
   
   <build>
