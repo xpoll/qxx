@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>科目一</title>
+  <link rel="icon" type="image/x-icon" href="http://xn.blmdz.xyz/lm.ico">
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+<div class="container-fluid">
+  <br>
+  <a href="http://blmdz.xyz">
+    千酌一梦醉独殇
+  </a>
+  <p class="text-right">~~ xpoll</p>
+  <br>
+  <blockquote>
+    <p><strong id="index_id"></strong>.&nbsp;<strong id="question"></strong></p>
+    <div id="options"></div>
+  </blockquote>
+  <img id="img" class="img-thumbnail" width="300px" height="300px">
+  <br>
+  <button type="button" class="btn btn-default btn-sm" id="btn1">上一题</button>
+  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">显示</button>
+  <button type="button" class="btn btn-default btn-sm" id="btn2">下一题</button>
+  <br>  <br>
+  <input type="number" class="form-control" id="index" placeholder="number">
+  <input type="hidden" name="answer">
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">..</h4>
+        </div>
+        <div class="modal-body" id="explain">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+  $('#btn1').click(function(){
+    init($('#index').val() * 1 - 1);
+  })
+  $('#btn2').click(function(){
+    init($('#index').val() * 1 + 1);
+  })
+  init(1);
+  function init(index) {
+    if (index < 1) index = 1;
+    if (index > 1503) index = 1503;
+    $.ajax({
+      url: 'http://blmdz.cn/api/car/' + index,
+      type: 'get',
+      dataType: 'json',
+      success: function(data) {
+        var options = "";
+        if (data.data.optionA != "") options += '<button type="button" class="btn btn-default" data-answer="A">A. ' + data.data.optionA + '</button><br><br>'
+        if (data.data.optionB != "") options += '<button type="button" class="btn btn-default" data-answer="B">B. ' + data.data.optionB + '</button><br><br>'
+        if (data.data.optionC != "") options += '<button type="button" class="btn btn-default" data-answer="C">C. ' + data.data.optionC + '</button><br><br>'
+        if (data.data.optionD != "") options += '<button type="button" class="btn btn-default" data-answer="D">D. ' + data.data.optionD + '</button><br><br>'
+        var answer = data.data.answer / 16;
+        answer = answer > 4 ? 'D' : (answer == 1 ? 'A' : (answer == 2 ? 'B' : 'C'));
+
+        if (data.data.mediaType == 1) {
+          $('#img').attr('src', data.data.mediaContent)
+          $('#img').css('display', 'block')
+        } else {
+          $('#img').removeAttr('src')
+          $('#img').css('display', 'none')
+        }
+
+        $('#question').html(data.data.question)
+        $('#options').html(options)
+        $('#myModalLabel').html(answer)
+        $('input[name=answer]').val(answer)
+        $('#explain').html(data.data.explain)
+
+        $('#options').find('button').click(function(){
+          $('#options').find('button').removeClass('btn-danger').removeClass('btn-success').removeClass('btn-default')
+          $('#options').find('button').addClass('btn-default')
+          if ($(this).data('answer') == $('input[name=answer]').val()) {
+            $(this).removeClass('btn-default')
+            $(this).addClass('btn-success')
+          } else {
+            $(this).addClass('btn-danger')
+          }
+        })
+      }
+    })
+    $('#index_id').html(index)
+    $('#index').val(index)
+  }
+</script>
+
+</body>
+</html>

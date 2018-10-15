@@ -1,5 +1,9 @@
 package cn.blmdz.source;
 
+
+//1. static
+//2. static 变量赋值
+//3. 类{}-构造方法-父类{}-父类构造方法
 public class Fun02 extends Fun021 {
 	static {
 		System.out.print("3");
